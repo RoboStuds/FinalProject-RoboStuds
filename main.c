@@ -3,6 +3,10 @@
 #include <wiringPi.h>
 #include "Motor.h"
 
+#define IR_L 8
+#define IR_C 9 
+#define IR_R 7
+
 // handles a signal interrupt
 void sigint_handler(int sig_num) {
     printf("Keyboard Interrupt\n");
@@ -24,11 +28,31 @@ int main(void) {
     } 
 
     setup(motors, n, arrows);
-    int duty_cycle = 5;
+    pinMode(IR_L, INPUT);
+    pinMode(IR_C, INPUT);
+    pinMode(IR_R, INPUT);
+
+    int duty_cycle = 20;
     while(1) {
         forward(motors, n, duty_cycle, arrows);
         delay(5000);
 
+        /*
+        if((digitalRead(IR_L) == 0))
+            printf("left detected white");
+        else 
+            printf("left detected black");
+        
+        if((digitalRead(IR_C) == 0))
+            printf("center detected white");
+        else 
+            printf("center detected black");
+        
+        if((digitalRead(IR_R) == 0))
+            printf("right detected white");
+        else 
+            printf("right detected black");
+        */
     }
 
     stop(motors, n, arrows);
