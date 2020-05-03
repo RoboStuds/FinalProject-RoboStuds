@@ -26,7 +26,7 @@ void left()
     printf("Motors moving to the left\n");
 
     //Motor 1
-    digitalWrite(0, HIGH);
+    digitalWrite(0, LOW);
     digitalWrite(2, LOW);
     digitalWrite(3, LOW);
 
@@ -47,7 +47,7 @@ void right()
     digitalWrite(3, HIGH);
 
     //Motor 2
-    digitalWrite(6, HIGH);
+    digitalWrite(6, LOW);
     digitalWrite(4, LOW);
     digitalWrite(5, LOW);
 }
@@ -110,21 +110,21 @@ int main(void)
 
     while(var < 2){
         //Move Forward
-        if (pinMode(7, INPUT) == True && pinMode(8, INPUT) == True)
+        if ((digitalRead(7) == 0) && (digitalRead(8) == 0))
         {
             forward();
             delay(5000);
         }
         //Make a Right turn
         else
-            (pinMode(7, INPUT) == False && pinMode(8, INPUT) == True)
+            ((digitalRead(7) == 0) && (digitalRead(8) == 1))
             {
                 right();
                 delay(5000);
             }
 
         //Make a left turn
-        else(pinMode(7, INPUT) == True && pinMode(8, INPUT) == False)
+        else((digitalRead(7) == 1) && (digitalRead(8) == 0))
         {
             left();
             delay(5000);
