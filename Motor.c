@@ -7,13 +7,13 @@
 int keyboard_interrupt = 0;
 
 // wiringPi 0 = P11, wiringPi 2 = P13, wiringPi 3 = P15
-Motor m1 = {.num = 1, .e = 0, .f = 3, .r = 2};
+Motor back_left_motor = {.num = 1, .e = 0, .f = 3, .r = 2};
 // wiringPi 6 = P22, wiringPi 4 = P16, wiringPi 5 = P18
-Motor m2 = {.num = 2, .e = 6, .f = 5, .r = 4}; 
+Motor back_right_motor = {.num = 2, .e = 6, .f = 5, .r = 4}; 
 // wiringPi 12 = P19, wiringPi 13 = P21, wiringPi 14 = P23
-Motor m3 = {.num = 3, .e = 12, .f = 14, .r = 13};
+Motor front_right_motor = {.num = 3, .e = 12, .f = 14, .r = 13};
 // wiringPi 26 = P32, wiringPi 10 = P24, wiringPi 11 = P26
-Motor m4 = {.num = 4, .e = 26, .f = 11, .r = 10};
+Motor front_left_motor = {.num = 4, .e = 26, .f = 11, .r = 10};
 
 
 // wiringPi 25 = P37, wiringPi 23 = P33, wiringPi 27 = P36, wiringPi 24 = P35

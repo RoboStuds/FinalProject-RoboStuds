@@ -16,7 +16,7 @@ void sigint_handler(int sig_num) {
 
 
 int main(void) {
-    Motor motors[] = {m1, m2, m3, m4};
+    Motor motors[] = {back_left_motor, back_right_motor, front_right_motor, front_left_motor};
     int n = sizeof(motors) / sizeof(motors[0]);
     
     // sets the sigint_handler to handle a signal interrupt
@@ -34,15 +34,16 @@ int main(void) {
 
     int duty_cycle = 20;
     while(1) {
-        forward(motors, n, duty_cycle, arrows);
-        delay(5000);
+        //forward(motors, n, duty_cycle, arrows);
+        //delay(5000);
 
-        /*
+        
         if((digitalRead(IR_L) == 0))
             printf("left detected white");
         else 
             printf("left detected black");
         
+        /*
         if((digitalRead(IR_C) == 0))
             printf("center detected white");
         else 
@@ -55,7 +56,7 @@ int main(void) {
         */
     }
 
-    stop(motors, n, arrows);
+    //stop(motors, n, arrows);
 
     return 0;
 }
