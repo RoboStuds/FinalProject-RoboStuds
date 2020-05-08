@@ -13,6 +13,10 @@ void sigint_handler(int sig_num) {
     keyboard_interrupt = 1;
 }
 
+PI_THREAD(detect_line) {
+    
+    return 0;
+} 
 
 
 int main(void) {
@@ -32,28 +36,14 @@ int main(void) {
     pinMode(IR_C, INPUT);
     pinMode(IR_R, INPUT);
 
+    int line_sensor_thread = piThreadCreate(detect_line);
+    if(line_sensor_thread != 0) {
+        printf("Failed to create the thread for the line sensors");
+    }
+
     int duty_cycle = 20;
     while(1) {
-        //forward(motors, n, duty_cycle, arrows);
-        //delay(5000);
-
-        
-        if((digitalRead(IR_L) == 0))
-            printf("left detected white");
-        else 
-            printf("left detected black");
-        
-        /*
-        if((digitalRead(IR_C) == 0))
-            printf("center detected white");
-        else 
-            printf("center detected black");
-        
-        if((digitalRead(IR_R) == 0))
-            printf("right detected white");
-        else 
-            printf("right detected black");
-        */
+        forward(motors, n, duty_cycle, arrows);
     }
 
     //stop(motors, n, arrows);
