@@ -99,7 +99,7 @@ int main(void)
 
     //Sensor Pins
     pinMode(7, INPUT);
-    pinMode(8, INPUT;
+    pinMode(12, INPUT;
 
     int speed = 10;
 
@@ -110,21 +110,21 @@ int main(void)
 
     while(var < 2){
         //Move Forward
-        if ((digitalRead(7) == 0) && (digitalRead(8) == 0))
+        if ((digitalRead(7) == 0) && (digitalRead(12) == 0))
         {
             forward();
             delay(5000);
         }
         //Make a Right turn
         else
-            ((digitalRead(7) == 0) && (digitalRead(8) == 1))
+            ((digitalRead(7) == 0) && (digitalRead(12) == 1))
             {
                 right();
                 delay(5000);
             }
 
         //Make a left turn
-        else((digitalRead(7) == 1) && (digitalRead(8) == 0))
+        else((digitalRead(7) == 1) && (digitalRead(12) == 0))
         {
             left();
             delay(5000);
