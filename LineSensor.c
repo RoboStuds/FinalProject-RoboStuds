@@ -2,6 +2,7 @@
 #include <softPwm.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include "Motor.h"
 
 //BCM: 4, 10, 14
