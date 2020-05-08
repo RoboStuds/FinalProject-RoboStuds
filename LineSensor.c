@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include "Motor.h"
+#include "LineSensor.h"
 
 //BCM: 4, 10, 14
 #define IR_L 7
