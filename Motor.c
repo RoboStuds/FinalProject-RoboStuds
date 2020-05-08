@@ -132,24 +132,24 @@ void backward(Motor motors[], int n, int duty_cycle, Arrow arrows) {
 }
 
 void move_straight(Motor right_motor, Motor left_motor, Arrow arrows) {
-    digitalWrite(right_motor, HIGH);
-    digitalWrite(left_motor, HIGH);
+    digitalWrite(right_motor.f, HIGH);
+    digitalWrite(left_motor.f, HIGH);
 
     digitalWrite(arrows.ar, LOW);
     digitalWrite(arrows.al, LOW);
 }
 
 void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
-    digitalWrite(right_motor, LOW);
-    digitalWrite(left_motor, HIGH);
+    digitalWrite(right_motor.f, LOW);
+    digitalWrite(left_motor.f, HIGH);
 
     digitalWrite(arrows.ar, HIGH);
     digitalWrite(arrows.al, LOW);
 }
 
 void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
-    digitalWrite(right_motor, HIGH);
-    digitalWrite(left_motor, LOW);
+    digitalWrite(right_motor.f, HIGH);
+    digitalWrite(left_motor.f, LOW);
 
     digitalWrite(arrows.ar, LOW);
     digitalWrite(arrows.al, HIGH);
