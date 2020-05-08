@@ -17,7 +17,8 @@
     void stop(Motor motors[], int n, Arrow arrows);
     void forward(Motor motors[], int n, int duty_cycle, Arrow arrows);
     void backward(Motor motors[], int n, int duty_cycle, Arrow arrows);
-    void right(Motor right_motor, int n, int duty_cycle, Arrow arrows);
-    void left(Motor left_motor, int n, int duty_cycle, Arrow arrows);
+    void move_straight(Motor right_motor, Motor left_motor, Arrow arrows);
+    void move_right(Motor right_motor, Motor left_motor, Arrow arrows);
+    void move_left(Motor right_motor, Motor left_motor, Arrow arrows);
     void change_speed(Motor motors[], int n, int duty_cycle);
 #endif
