@@ -50,14 +50,14 @@ int main(void) {
 
     int i = 0;
     while(i < 6) {
-        forward(back_motors, n, duty_cycle, arrows);
+        forward(back_motors, num_back_motors, duty_cycle, arrows);
         delay(5000);
 
         duty_cycle += 5;
         i++;
     }
 
-    stop(front_motors, num_front_motors, arrows)
+    stop(front_motors, num_front_motors, arrows);
     stop(back_motors, num_back_motors, arrows);
 
     return 0;
