@@ -9,7 +9,7 @@
     } Arrow;
 
     extern int keyboard_interrupt;
-    extern Motor m1, m2, m3, m4;
+    extern Motor back_left_motor, back_right_motor, front_right_motor, front_left_motor;
     extern Arrow arrows;
 
     void setup(Motor motors[], int n, Arrow arrows);
