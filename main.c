@@ -17,7 +17,7 @@ PI_THREAD(detect_line) {
     move_right(front_right_motor, front_left_motor, arrows);
     delay(5000);
     move_straight(front_right_motor, front_left_motor, arrows);
-    delal(5000);
+    delay(5000);
     move_left(front_right_motor, front_left_motor, arrows);
     delay(5000);
     return 0;
