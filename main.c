@@ -48,9 +48,11 @@ int main(void) {
 
     int duty_cycle = 20;
     int i = 0;
-    while(i < 5) {
+    while(i < 6) {
         forward(motors, n, duty_cycle, arrows);
         delay(5000);
+
+        duty_cycle += 5;
         i++;
     }
 
