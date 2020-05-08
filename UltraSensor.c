@@ -7,7 +7,7 @@ void displayCM(double time)
 {	
 	double distance = time / 58.0;
 		
-		if(distance < 100 && distance > 2)
+		if(distance < 50 && distance > 2)
 		{
 			printf("The distance from object is: %.2fcm\n",distance);
 			digitalWrite(RED, HIGH);
