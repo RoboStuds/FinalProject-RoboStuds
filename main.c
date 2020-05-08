@@ -16,6 +16,8 @@ void sigint_handler(int sig_num) {
 }
 
 PI_THREAD(detect_line) {
+    move_straight(front_right_motor, front_left_motor, duty_cycle, arrows);
+    delay(5000);
     move_right(front_right_motor, front_left_motor, duty_cycle, arrows);
     delay(5000);
     move_straight(front_right_motor, front_left_motor, duty_cycle, arrows);
