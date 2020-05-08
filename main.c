@@ -7,6 +7,8 @@
 #define IR_C 9 
 #define IR_R 7
 
+int duty_cycle = 20;
+
 // handles a signal interrupt
 void sigint_handler(int sig_num) {
     printf("Keyboard Interrupt\n");
@@ -14,19 +16,21 @@ void sigint_handler(int sig_num) {
 }
 
 PI_THREAD(detect_line) {
-    move_right(front_right_motor, front_left_motor, arrows);
+    move_right(front_right_motor, front_left_motor, duty_cycle, arrows);
     delay(5000);
-    move_straight(front_right_motor, front_left_motor, arrows);
+    move_straight(front_right_motor, front_left_motor, duty_cycle, arrows);
     delay(5000);
-    move_left(front_right_motor, front_left_motor, arrows);
+    move_left(front_right_motor, front_left_motor, duty_cycle, arrows);
     delay(5000);
     return 0;
 } 
 
 
 int main(void) {
-    Motor motors[] = {back_left_motor, back_right_motor, front_right_motor, front_left_motor};
-    int n = sizeof(motors) / sizeof(motors[0]);
+    Motor front_motors[] = {front_right_motor, front_left_motor};
+    Motor back_motors[] = {back_right_motor, back_left_motor};
+    int num_front_motors = sizeof(front_motors) / sizeof(front_motors[0]);
+    int num_back_motors = sizeof(back_motors) / sizeof(back_motors[0]);
     
     // sets the sigint_handler to handle a signal interrupt
     signal(SIGINT, sigint_handler);
@@ -36,27 +40,25 @@ int main(void) {
         return -1;
     } 
 
-    setup(motors, n, arrows);
-    pinMode(IR_L, INPUT);
-    pinMode(IR_C, INPUT);
-    pinMode(IR_R, INPUT);
+    setup(front_motors, num_front_motors, arrows);
+    setup(back_motors, num_back_motors, arrows);
 
     int line_sensor_thread = piThreadCreate(detect_line);
     if(line_sensor_thread != 0) {
         printf("Failed to create the thread for the line sensors");
     }
 
-    int duty_cycle = 20;
     int i = 0;
     while(i < 6) {
-        forward(motors, n, duty_cycle, arrows);
+        forward(back_motors, n, duty_cycle, arrows);
         delay(5000);
 
         duty_cycle += 5;
         i++;
     }
 
-    stop(motors, n, arrows);
+    stop(front_motors, num_front_motors, arrows)
+    stop(back_motors, num_back_motors, arrows);
 
     return 0;
 }

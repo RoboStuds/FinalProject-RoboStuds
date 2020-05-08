@@ -131,25 +131,40 @@ void backward(Motor motors[], int n, int duty_cycle, Arrow arrows) {
     }
 }
 
-void move_straight(Motor right_motor, Motor left_motor, Arrow arrows) {
+void move_straight(Motor right_motor, Motor left_motor, int duty_cycle, Arrow arrows) {
+    softPwmWrite(right_motor.e, duty_cycle);
     digitalWrite(right_motor.f, HIGH);
+    digitalWrite(right_motor.r, HIGH);
+
+    softPwmWrite(left_motor.e, duty_cycle);
     digitalWrite(left_motor.f, HIGH);
+    digitalWrite(left_motor.r, HIGH);
 
     digitalWrite(arrows.ar, LOW);
     digitalWrite(arrows.al, LOW);
 }
 
-void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
+void move_right(Motor right_motor, Motor left_motor, int duty_cycle, Arrow arrows) {
+    softPwmWrite(right_motor.e, LOW);
     digitalWrite(right_motor.f, LOW);
+    digitalWrite(right_motor.r, LOW);
+
+    softPwmWrite(left_motor.e, duty_cycle);
     digitalWrite(left_motor.f, HIGH);
+    digitalWrite(left_motor.r, HIGH);
 
     digitalWrite(arrows.ar, HIGH);
     digitalWrite(arrows.al, LOW);
 }
 
-void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
+void move_left(Motor right_motor, Motor left_motor, int duty_cycle, Arrow arrows) {
+    softPwmWrite(right_motor.e, duty_cycle);
     digitalWrite(right_motor.f, HIGH);
+    digitalWrite(right_motor.r, HIGH);
+
+    softPwmWrite(left_motor.e, LOW);
     digitalWrite(left_motor.f, LOW);
+    digitalWrite(left_motor.r, LOW);
 
     digitalWrite(arrows.ar, LOW);
     digitalWrite(arrows.al, HIGH);
