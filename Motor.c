@@ -149,7 +149,7 @@ void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
 
 void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
     digitalWrite(right_motor, HIGH);
-    digitalWrite(left_motor, LOW;
+    digitalWrite(left_motor, LOW);
 
     digitalWrite(arrows.ar, LOW);
     digitalWrite(arrows.al, HIGH);
