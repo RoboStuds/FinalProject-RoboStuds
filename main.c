@@ -20,21 +20,21 @@ void sigint_handler(int sig_num) {
 
 PI_THREAD(detect_line) {
     while (1) {
-        move_straight(fr_motor, fl_motor, duty_cycle, arrows);
-        delay(5000);
-        move_right(fr_motor, arrows);
-        delay(5000);
-        move_straight(fr_motor, fl_motor, duty_cycle, arrows);
-        delay(5000);
-        move_left(fl_motor, arrows);
-        delay(5000);
-        move_straight(fr_motor, fl_motor, duty_cycle, arrows);
-        delay(5000);
+        // move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        // delay(5000);
+        // move_right(fr_motor, arrows);
+        // delay(5000);
+        // move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        // delay(5000);
+        // move_left(fl_motor, arrows);
+        // delay(5000);
+        // move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        // delay(5000);
     }
     return 0;
 } 
 
-PI_THREAD(detect_block) {
+PI_THREAD(get_distance) {
     while (1) {
         distance = measure_distance();
     }
@@ -58,7 +58,7 @@ int main(void) {
     setup_motor(motors, num_motors, arrows);
     setup_ultra_sensor();
 
-    int ultra_sensor_thread = piThreadCreate(detect_block);
+    int ultra_sensor_thread = piThreadCreate(get_distance);
     if(ultra_sensor_thread != 0) {
         printf("Failed to create the thread for the ultrasonic sensor");
     }
