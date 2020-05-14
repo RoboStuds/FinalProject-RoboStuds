@@ -10,6 +10,7 @@
 #define bl_motor m1
 
 int duty_cycle = 25;
+double distance = 0;
 
 // handles a signal interrupt
 void sigint_handler(int sig_num) {
@@ -34,17 +35,11 @@ PI_THREAD(detect_line) {
 } 
 
 PI_THREAD(detect_block) {
-    Motor motors[] = {fr_motor, fl_motor, br_motor, bl_motor};
-    int num_motors = sizeof(motors) / sizeof(motors[0]);
-
     while (1) {
-        double distance = measure_distance();
-
-        if(distance < 50 && distance > 2)
-            stop(motors, num_motors, arrows);
+        distance = measure_distance();
     }
-    
 
+    return 0;
 }
 
 
@@ -76,7 +71,12 @@ int main(void) {
 
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
-        forward(motors, num_motors, arrows);
+        if(distance < 50 && distance > 2)
+            stop(motors, num_motors, arrows);
+        else {
+            forward(motors, num_motors, arrows);
+        }
+        
     }
 
     stop(motors, num_motors, arrows);
