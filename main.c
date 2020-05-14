@@ -3,11 +3,12 @@
 #include <wiringPi.h>
 #include "Motor.h"
 
-#define IR_L 8
-#define IR_C 9 
-#define IR_R 7
+#define fr_motor m3
+#define fl_motor m4
+#define br_motor m2
+#define bl_motor m1
 
-int duty_cycle = 20;
+int duty_cycle = 25;
 
 // handles a signal interrupt
 void sigint_handler(int sig_num) {
@@ -16,23 +17,23 @@ void sigint_handler(int sig_num) {
 }
 
 PI_THREAD(detect_line) {
-    move_straight(front_right_motor, front_left_motor, duty_cycle, arrows);
+    move_straight(fr_motor, fl_motor, duty_cycle, arrows);
     delay(5000);
-    move_right(front_right_motor, front_left_motor, duty_cycle, arrows);
+    move_right(fr_motor, arrows);
     delay(5000);
-    move_straight(front_right_motor, front_left_motor, duty_cycle, arrows);
+    move_straight(fr_motor, fl_motor, duty_cycle, arrows);
     delay(5000);
-    move_left(front_right_motor, front_left_motor, duty_cycle, arrows);
+    move_left(fl_motor, arrows);
+    delay(5000);
+    move_straight(fr_motor, fl_motor, duty_cycle, arrows);
     delay(5000);
     return 0;
 } 
 
 
 int main(void) {
-    Motor front_motors[] = {front_right_motor, front_left_motor};
-    Motor back_motors[] = {back_right_motor, back_left_motor};
-    int num_front_motors = sizeof(front_motors) / sizeof(front_motors[0]);
-    int num_back_motors = sizeof(back_motors) / sizeof(back_motors[0]);
+    Motor motors[] = {fr_motor, fl_motor, br_motor, bl_motor};
+    int num_motors = sizeof(motors) / sizeof(motors[0]);
     
     // sets the sigint_handler to handle a signal interrupt
     signal(SIGINT, sigint_handler);
@@ -42,25 +43,20 @@ int main(void) {
         return -1;
     } 
 
-    setup(front_motors, num_front_motors, arrows);
-    setup(back_motors, num_back_motors, arrows);
+    setup(motors, num_motors, arrows);
 
     int line_sensor_thread = piThreadCreate(detect_line);
     if(line_sensor_thread != 0) {
         printf("Failed to create the thread for the line sensors");
     }
 
-    int i = 0;
-    while(i < 6) {
-        forward(back_motors, num_back_motors, duty_cycle, arrows);
-        delay(5000);
 
-        duty_cycle += 5;
-        i++;
+    set_speed(motors, num_motors, duty_cycle);
+    while(1) {
+        forward(motors, num_motors, arrows);
     }
 
-    stop(front_motors, num_front_motors, arrows);
-    stop(back_motors, num_back_motors, arrows);
+    stop(motors, num_motors, arrows);
 
     return 0;
 }
