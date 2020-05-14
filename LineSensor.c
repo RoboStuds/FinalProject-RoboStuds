@@ -8,8 +8,8 @@
 
 //BCM: 4, 10, 14
 #define IR_L 7
-#define IR_C 12 
-#define IR_R 15
+#define IR_C 15 
+#define IR_R 12
 
 void sensor_setup()
 {
