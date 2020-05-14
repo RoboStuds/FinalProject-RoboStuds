@@ -9,8 +9,10 @@
 #define br_motor m2
 #define bl_motor m1
 
+#define DISTANCE_KEY 0
+
 int duty_cycle = 25;
-double distance = 0;
+static volatile double global_dist = 0;
 
 // handles a signal interrupt
 void sigint_handler(int sig_num) {
@@ -34,9 +36,11 @@ PI_THREAD(detect_line) {
     return 0;
 } 
 
-PI_THREAD(get_distance) {
+PI_THREAD(measure_distance) {
     while (1) {
-        distance = measure_distance();
+        piLock(DISTANCE_KEY);
+        global_dist = measure_distance();
+        piUnlock(DISTANCE_KEY);
     }
 
     return 0;
@@ -58,7 +62,7 @@ int main(void) {
     setup_motor(motors, num_motors, arrows);
     setup_ultra_sensor();
 
-    int ultra_sensor_thread = piThreadCreate(get_distance);
+    int ultra_sensor_thread = piThreadCreate(measure_distance);
     if(ultra_sensor_thread != 0) {
         printf("Failed to create the thread for the ultrasonic sensor");
     }
@@ -68,9 +72,12 @@ int main(void) {
         printf("Failed to create the thread for the line sensors");
     }
 
-
+    double distance = 0;
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
+        piLock(DISTANCE_KEY);
+        distance = global_dist;
+        piUnlock(DISTANCE_KEY);
         if(distance < 50 && distance > 2)
             stop(motors, num_motors, arrows);
         else {
