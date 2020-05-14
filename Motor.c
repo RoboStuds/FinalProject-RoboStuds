@@ -20,7 +20,7 @@ Motor m4 = {.num = 4, .e = 26, .f = 11, .r = 10};
 Arrow arrows = {.af = 25, .ab = 23, .ar = 27, .al = 24};
 
 // sets the motor and arrow pins to output mode
-void setup(Motor motors[], int num_motors, Arrow arrows) {
+void setup_motor(Motor motors[], int num_motors, Arrow arrows) {
     for (int i = 0; i < num_motors; i++) {
         pinMode(motors[i].e, OUTPUT);
         pinMode(motors[i].f, OUTPUT);
@@ -37,7 +37,7 @@ void setup(Motor motors[], int num_motors, Arrow arrows) {
 }
 
 // sets all the motor and arrow pins to low and switches them into input mode
-void cleanup(Motor motors[], int num_motors, Arrow arrows) {
+void cleanup_motor(Motor motors[], int num_motors, Arrow arrows) {
     for (int i = 0; i < num_motors; i++) {
         softPwmWrite(motors[i].e, 0);
         digitalWrite(motors[i].e, LOW);

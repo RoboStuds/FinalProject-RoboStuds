@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <wiringPi.h>
 #include "Motor.h"
+#include "UltraSensor.h"
 
 #define fr_motor m3
 #define fl_motor m4
@@ -17,18 +18,34 @@ void sigint_handler(int sig_num) {
 }
 
 PI_THREAD(detect_line) {
-    move_straight(fr_motor, fl_motor, duty_cycle, arrows);
-    delay(5000);
-    move_right(fr_motor, arrows);
-    delay(5000);
-    move_straight(fr_motor, fl_motor, duty_cycle, arrows);
-    delay(5000);
-    move_left(fl_motor, arrows);
-    delay(5000);
-    move_straight(fr_motor, fl_motor, duty_cycle, arrows);
-    delay(5000);
+    while (1) {
+        move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        delay(5000);
+        move_right(fr_motor, arrows);
+        delay(5000);
+        move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        delay(5000);
+        move_left(fl_motor, arrows);
+        delay(5000);
+        move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        delay(5000);
+    }
     return 0;
 } 
+
+PI_THREAD(detect_block) {
+    Motor motors[] = {fr_motor, fl_motor, br_motor, bl_motor};
+    int num_motors = sizeof(motors) / sizeof(motors[0]);
+
+    while (1) {
+        double distance = measure_distance();
+
+        if(distance < 50 && distance > 2)
+            stop(motors, num_motors, arrows);
+    }
+    
+
+}
 
 
 int main(void) {
@@ -43,7 +60,13 @@ int main(void) {
         return -1;
     } 
 
-    setup(motors, num_motors, arrows);
+    setup_motor(motors, num_motors, arrows);
+    setup_ultra_sensor();
+
+    int ultra_sensor_thread = piThreadCreate(detect_block);
+    if(ultra_sensor_thread != 0) {
+        printf("Failed to create the thread for the ultrasonic sensor");
+    }
 
     int line_sensor_thread = piThreadCreate(detect_line);
     if(line_sensor_thread != 0) {
