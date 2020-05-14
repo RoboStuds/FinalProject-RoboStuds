@@ -66,7 +66,7 @@ void cleanup(Motor motors[], int num_motors, Arrow arrows) {
 void stop(Motor motors[], int num_motors, Arrow arrows) {
     for (int i = 0; i < num_motors; i++) {
         printf("Motor%d stops...\n", motors[i].num);
-        softPwmWrite(motors[i].e, 0);
+        //softPwmWrite(motors[i].e, 0);
         digitalWrite(motors[i].f, LOW);
         digitalWrite(motors[i].r, LOW);
     }
