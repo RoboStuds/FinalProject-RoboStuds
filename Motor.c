@@ -37,7 +37,7 @@ void setup_motor(Motor motors[], int num_motors, Arrow arrows) {
 }
 
 // sets all the motor and arrow pins to low and switches them into input mode
-void cleanup_motor(Motor motors[], int num_motors, Arrow arrows) {
+void cleanup(Motor motors[], int num_motors, Arrow arrows) {
     for (int i = 0; i < num_motors; i++) {
         softPwmWrite(motors[i].e, 0);
         digitalWrite(motors[i].e, LOW);

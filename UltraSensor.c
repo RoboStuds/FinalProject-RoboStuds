@@ -18,7 +18,6 @@ void setup_ultra_sensor() {
 }
 
 double measure_distance() {
-	double distance = 0;
 	double startTime = 0;
 	double endTime = 0;
 	digitalWrite(trig, LOW);
