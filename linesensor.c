@@ -1,140 +1,64 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <wiringPi.h>
 #include <softPwm.h>
-#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include "Motor.h"
+#include "LineSensor.h"
 
-void forward()
-{
+//BCM: 22, 14, 10
+#define IR_L 6
+#define IR_C 15 
+#define IR_R 12
 
-    printf("Motor moving forward\n");
+void sensor_setup() {
+    pinMode(IR_L, INPUT);
+    pinMode(IR_C, INPUT);
+    pinMode(IR_R, INPUT);
 
-    //Motor 1 moves forward
-    digitalWrite(0, HIGH);
-    digitalWrite(2, HIGH);
-    digitalWrite(3, LOW);
-
-    //Motor 2 moves forward
-    digitalWrite(6, HIGH);
-    digitalWrite(4, HIGH);
-    digitalWrite(5, LOW);
 }
 
-void left()
-{
-
-    printf("Motors moving to the left\n");
-
-    //Motor 1
-    digitalWrite(0, LOW);
-    digitalWrite(2, LOW);
-    digitalWrite(3, LOW);
-
-    //Motor 2
-    digitalWrite(6, HIGH);
-    digitalWrite(4, HIGH);
-    digitalWrite(5, HIGH);
-}
-
-void right()
-{
-
-    printf("Motors moving to the right\n");
-
-    //Motor 1
-    digitalWrite(0, HIGH);
-    digitalWrite(2, HIGH);
-    digitalWrite(3, HIGH);
-
-    //Motor 2
-    digitalWrite(6, LOW);
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-}
-
-void backward()
-{
-
-    printf("Motor moving backward\n");
-
-    //Motor 1 moves Backward
-    digitalWrite(0, HIGH);
-    digitalWrite(2, LOW);
-    digitalWrite(3, HIGH);
-
-    //Motor 2 moves Backward
-    digitalWrite(6, HIGH);
-    digitalWrite(4, LOW);
-    digitalWrite(5, HIGH);
-}
-
-void stop()
-{
-
-    printf("Motors stop\n");
-
-    //Stop the Motors
-    digitalWrite(0, LOW);
-    digitalWrite(2, LOW);
-    digitalWrite(3, LOW);
-    digitalWrite(6, LOW);
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-}
-
-int main(void)
-{
-
-    wiringPiSetup();
-
-    //Motor 1
-    pinMode(0, OUTPUT);
-    pinMode(2, OUTPUT);
-    pinMode(3, OUTPUT);
-
-    //Motor 2
-    pinMode(6, OUTPUT);
-    pinMode(4, OUTPUT);
-    pinMode(5, OUTPUT);
-
-    //Sensor Pins
-    pinMode(7, INPUT);
-    pinMode(8, INPUT;
-
-    int speed = 10;
-
-    softPwmCreate(0, speed, 100);int var = 0;
-    softPwmCreate(6, speed, 100);
-
-    int var = 0;
-
-    while(var < 2){
-        //Move Forward
-        if ((digitalRead(7) == 0) && (digitalRead(8) == 0))
-        {
-            forward();
-            delay(5000);
-        }
-        //Make a Right turn
-        else
-            ((digitalRead(7) == 0) && (digitalRead(8) == 1))
-            {
-                right();
-                delay(5000);
-            }
-
-        //Make a left turn
-        else((digitalRead(7) == 1) && (digitalRead(8) == 0))
-        {
-            left();
-            delay(5000);
-        }
-        else
-        {
-            stop();
-        }
-        var++;
-        speed += 30;
+void detect_line() {
+    // move straight: left on white, center on black, right on white 
+    if((digitalRead(IR_L) == 0) && (digitalRead(IR_C) == 1)&& (digitalRead(IR_R)== 0)) {
+        straight = 1; 
+        right = 0; 
+        left = 0;
+        stop = 0;
     }
-    return 0;
+    // turn left: left on black, center on white, right on white
+    else if((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 0))&& (digitalRead(IR_C == 0)) {
+        straight = 0; 
+        right = 0; 
+        left = 1;
+        stop = 0;
+    }
+    // turn left: left on black, center on black, right on white
+    else if((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 0)) {
+        straight = 0; 
+        right = 0; 
+        left = 1;
+        stop = 0;
+    }
+    else if((digitalRead(IR_L == 0)) && (digitalRead(IR_C == 0))&& (digitalRead(IR_C == 1)) {
+        straight = 0; 
+        right = 1; 
+        left = 0;
+        stop = 0;
+    }
+    // turn right:left on white, center on black, right on black
+    else if((digitalRead(IR_L == 0)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 1)) {
+        straight = 0; 
+        right = 1; 
+        left = 0;
+        stop = 0;
+    } 
+    // Stops if all black(1)
+    else ((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 1)) {
+        straight = 0; 
+        right = 0; 
+        left = 0;
+        stop = 1;
+    }
+
 }

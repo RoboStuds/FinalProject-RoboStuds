@@ -3,11 +3,12 @@
 #include <wiringPi.h>
 #include "Motor.h"
 #include "UltraSensor.h"
+#include "LineSensor.h"
 
-#define fr_motor m3
-#define fl_motor m4
-#define br_motor m2
-#define bl_motor m1
+#define FR_MOTOR m3
+#define FL_MOTOR m4
+#define BR_MOTOR m2
+#define BL_MOTOR m1
 
 #define DISTANCE_KEY 0
 
@@ -20,17 +21,24 @@ void sigint_handler(int sig_num) {
     keyboard_interrupt = 1;
 }
 
-PI_THREAD(detect_line) {
+PI_THREAD(line_detection) {
     while (1) {
-        // move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        detect_line();
+        if right
+            move_right(FR_MOTOR, arrows);
+        else if left
+            move_left(FL_MOTOR, arrows);
+        else if straight
+            move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
+        // move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
         // delay(5000);
-        // move_right(fr_motor, arrows);
+        // move_right(FR_MOTOR, arrows);
         // delay(5000);
-        // move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        // move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
         // delay(5000);
-        // move_left(fl_motor, arrows);
+        // move_left(FL_MOTOR, arrows);
         // delay(5000);
-        // move_straight(fr_motor, fl_motor, duty_cycle, arrows);
+        // move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
         // delay(5000);
     }
     return 0;
@@ -48,7 +56,7 @@ PI_THREAD(get_distance) {
 
 
 int main(void) {
-    Motor motors[] = {fr_motor, fl_motor, br_motor, bl_motor};
+    Motor motors[] = {FR_MOTOR, FL_MOTOR, BR_MOTOR, BL_MOTOR};
     int num_motors = sizeof(motors) / sizeof(motors[0]);
     
     // sets the sigint_handler to handle a signal interrupt
@@ -67,7 +75,7 @@ int main(void) {
         printf("Failed to create the thread for the ultrasonic sensor");
     }
 
-    int line_sensor_thread = piThreadCreate(detect_line);
+    int line_sensor_thread = piThreadCreate(line_detection);
     if(line_sensor_thread != 0) {
         printf("Failed to create the thread for the line sensors");
     }
