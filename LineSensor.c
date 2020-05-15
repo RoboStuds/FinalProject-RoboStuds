@@ -33,11 +33,21 @@ PI_THREAD(detect_line)
         {
             return move_left();
         }
-        // turn right:left on white, center on black, right on white
+        // turn left: left on black, center on black, right on white
+        else if((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 0))
+        {
+            return move_left();
+        }
+        // turn right:left on white, center on black, right on black
         else if((digitalRead(IR_L == 0)) && (digitalRead(IR_C == 0))&& (digitalRead(IR_C == 1))
         {
             return move_right();
         }
+        // turn right:left on white, center on black, right on black
+        else if((digitalRead(IR_L == 0)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 1))
+        {
+            return move_right();
+        } 
         // Stops if all black(1)
         else ((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 1))
         {
