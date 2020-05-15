@@ -30,16 +30,6 @@ PI_THREAD(line_detection) {
             move_left(FL_MOTOR, arrows);
         else 
             move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
-        // move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
-        // delay(5000);
-        // move_right(FR_MOTOR, arrows);
-        // delay(5000);
-        // move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
-        // delay(5000);
-        // move_left(FL_MOTOR, arrows);
-        // delay(5000);
-        // move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
-        // delay(5000);
     }
     return 0;
 } 
