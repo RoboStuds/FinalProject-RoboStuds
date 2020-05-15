@@ -83,7 +83,7 @@ int main(void) {
         else {
             forward(motors, num_motors, arrows);
         }
-        delay(1000);
+        delay(500);
         
     }
 
