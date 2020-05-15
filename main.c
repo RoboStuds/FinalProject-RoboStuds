@@ -24,9 +24,9 @@ void sigint_handler(int sig_num) {
 PI_THREAD(line_detection) {
     while (1) {
         detect_line();
-        if right
+        if (right)
             move_right(FR_MOTOR, arrows);
-        else if left
+        else if (left)
             move_left(FL_MOTOR, arrows);
         else 
             move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
