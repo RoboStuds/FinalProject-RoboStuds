@@ -83,6 +83,7 @@ int main(void) {
             forward(motors, num_motors, arrows);
         }
         piUnlock(DISTANCE_KEY);
+        delay(5000);
         
     }
 
