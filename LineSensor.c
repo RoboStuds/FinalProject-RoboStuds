@@ -38,7 +38,7 @@ PI_THREAD(detect_line)
         {
             return move_left();
         }
-        // turn right:left on white, center on black, right on black
+        // turn right:left on white, center on white, right on black
         else if((digitalRead(IR_L == 0)) && (digitalRead(IR_C == 0))&& (digitalRead(IR_C == 1))
         {
             return move_right();
