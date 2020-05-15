@@ -36,7 +36,7 @@ PI_THREAD(detect_line) {
     return 0;
 } 
 
-PI_THREAD(measure_distance) {
+PI_THREAD(get_distance) {
     while (1) {
         piLock(DISTANCE_KEY);
         global_dist = measure_distance();
@@ -62,7 +62,7 @@ int main(void) {
     setup_motor(motors, num_motors, arrows);
     setup_ultra_sensor();
 
-    int ultra_sensor_thread = piThreadCreate(measure_distance);
+    int ultra_sensor_thread = piThreadCreate(get_distance);
     if(ultra_sensor_thread != 0) {
         printf("Failed to create the thread for the ultrasonic sensor");
     }
