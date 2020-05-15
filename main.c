@@ -77,12 +77,12 @@ int main(void) {
     while(1) {
         piLock(DISTANCE_KEY);
         distance = global_dist;
-        piUnlock(DISTANCE_KEY);
         if(distance < 50 && distance > 2)
             stop(motors, num_motors, arrows);
         else {
             forward(motors, num_motors, arrows);
         }
+        piUnlock(DISTANCE_KEY);
         
     }
 
