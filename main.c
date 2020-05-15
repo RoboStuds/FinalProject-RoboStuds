@@ -28,7 +28,7 @@ PI_THREAD(line_detection) {
             move_right(FR_MOTOR, arrows);
         else if left
             move_left(FL_MOTOR, arrows);
-        else if straight
+        else 
             move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
         // move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
         // delay(5000);

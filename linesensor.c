@@ -24,41 +24,36 @@ void detect_line() {
         straight = 1; 
         right = 0; 
         left = 0;
-        stop = 0;
     }
     // turn left: left on black, center on white, right on white
     else if((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 0))&& (digitalRead(IR_C == 0)) {
         straight = 0; 
         right = 0; 
         left = 1;
-        stop = 0;
     }
     // turn left: left on black, center on black, right on white
     else if((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 0)) {
         straight = 0; 
         right = 0; 
         left = 1;
-        stop = 0;
     }
     else if((digitalRead(IR_L == 0)) && (digitalRead(IR_C == 0))&& (digitalRead(IR_C == 1)) {
         straight = 0; 
         right = 1; 
         left = 0;
-        stop = 0;
     }
     // turn right:left on white, center on black, right on black
     else if((digitalRead(IR_L == 0)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 1)) {
         straight = 0; 
         right = 1; 
         left = 0;
-        stop = 0;
     } 
     // Stops if all black(1)
-    else ((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 1)) {
-        straight = 0; 
-        right = 0; 
-        left = 0;
-        stop = 1;
-    }
+    // else ((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 1))&& (digitalRead(IR_C == 1)) {
+    //     straight = 0; 
+    //     right = 0; 
+    //     left = 0;
+    //     stop = 1;
+    // }
 
 }
