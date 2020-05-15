@@ -11,6 +11,8 @@
 #define IR_C 15 
 #define IR_R 12
 
+int straight = 1, right = 0, left=0;
+
 void sensor_setup() {
     pinMode(IR_L, INPUT);
     pinMode(IR_C, INPUT);
