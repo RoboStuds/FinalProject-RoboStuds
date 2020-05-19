@@ -11,25 +11,18 @@
 #define BL_MOTOR m1
 
 #define DISTANCE_KEY 0
+#define POSITION_KEY 1
 
-int duty_cycle = 25;
+int duty_cycle = 5;
+static volatile int global_pos = on_line;
 static volatile double global_dist = 0;
 
-// handles a signal interrupt
-void sigint_handler(int sig_num) {
-    printf("Keyboard Interrupt\n");
-    keyboard_interrupt = 1;
-}
 
 PI_THREAD(line_detection) {
     while (1) {
-        detect_line();
-        if (right)
-            move_right(FR_MOTOR, arrows);
-        else if (left)
-            move_left(FL_MOTOR, arrows);
-        else 
-            move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
+        piLock(POSITION_KEY);
+        global_pos = detect_line();
+        piUnlock(POSITION_KEY);
     }
     return 0;
 } 
@@ -40,26 +33,10 @@ PI_THREAD(get_distance) {
         global_dist = measure_distance();
         piUnlock(DISTANCE_KEY);
     }
-
     return 0;
 }
 
-
-int main(void) {
-    Motor motors[] = {FR_MOTOR, FL_MOTOR, BR_MOTOR, BL_MOTOR};
-    int num_motors = sizeof(motors) / sizeof(motors[0]);
-    
-    // sets the sigint_handler to handle a signal interrupt
-    signal(SIGINT, sigint_handler);
-    
-    if (wiringPiSetup() == -1) {
-        printf("WiringPi Setup failed!\n");
-        return -1;
-    } 
-
-    setup_motor(motors, num_motors, arrows);
-    setup_ultra_sensor();
-
+void create_sensor_threads() {
     int ultra_sensor_thread = piThreadCreate(get_distance);
     if(ultra_sensor_thread != 0) {
         printf("Failed to create the thread for the ultrasonic sensor");
@@ -69,23 +46,88 @@ int main(void) {
     if(line_sensor_thread != 0) {
         printf("Failed to create the thread for the line sensors");
     }
+}
+
+// handles a signal interrupt
+void sigint_handler(int sig_num) {
+    printf("Keyboard Interrupt\n");
+    keyboard_interrupt = 1;
+}
+
+int is_obstacle() {
+    piLock(DISTANCE_KEY);
+    double distance = global_dist;
+    piUnlock(DISTANCE_KEY);
+
+    if(distance < 50 && distance > 2) {
+        printf("The distance from object is: %.2fcm\n", distance);
+        return 1;
+    }
+    return 0;
+}
+
+int get_position() {
+    piLock(POSITION_KEY);
+    int position = global_pos;
+    piUnlock(POSITION_KEY);
+
+    return position;
+}
+
+int keep_on_track() {
+    int position = get_position();
+
+    if(position == on_line) 
+        move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
+    else if(position == shifted_left)
+        move_right(FR_MOTOR, arrows);
+    else if(position == shifted_right)
+        move_left(FL_MOTOR);
+    else
+        printf("Can't detect the line!\n");
+}
+
+
+int main(void) {
+    // sets the sigint_handler to handle a signal interrupt
+    signal(SIGINT, sigint_handler);
+    
+    if (wiringPiSetup() == -1) {
+        printf("WiringPi Setup failed!\n");
+        return -1;
+    } 
 
     double distance = 0;
+
+    Motor motors[] = {FR_MOTOR, FL_MOTOR, BR_MOTOR, BL_MOTOR};
+    int num_motors = sizeof(motors) / sizeof(motors[0]);
+
+    setup_motor(motors, num_motors, arrows);
+    setup_ultra_sensor();
+
+    create_sensor_threads();
+
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
-        piLock(DISTANCE_KEY);
-        distance = global_dist;
-        piUnlock(DISTANCE_KEY);
-        if(distance < 70 && distance > 2)
-            stop(motors, num_motors, arrows);
-        else {
+        while (!is_obstacle()) {
             forward(motors, num_motors, arrows);
-        }
-        delay(1000);
-        
-    }
+            keep_on_track();
+        } 
 
-    stop(motors, num_motors, arrows);
+        stop(motors, num_motors, arrows); delay(1000);
+        reverse(motors, num_motors, arrows); delay(1000);
+        stop(motors, num_motors, arrows); delay(1000);
+        forward(motors, num_motors, arrows);
+
+        while (is_obstacle()) {
+            move_right(FR_MOTOR, arrows);
+        }
+
+        while (get_position() == out_of_line) {
+            move_left(FL_MOTOR, arrows);
+        }
+              
+    }
 
     return 0;
 }
