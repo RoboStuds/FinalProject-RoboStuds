@@ -14,7 +14,7 @@
 #define POSITION_KEY 1
 
 int duty_cycle = 5;
-static volatile int global_pos = line_sensor.on_line;
+static volatile int global_pos = on_line;
 static volatile double global_dist = 0;
 
 
@@ -74,14 +74,14 @@ int get_position() {
     return position;
 }
 
-int keep_on_track() {
+void keep_on_track() {
     int position = get_position();
     
-    if(position == line_sensor.on_line) 
+    if(position == on_line) 
         move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
-    else if(position == line_sensor.shifted_left)
+    else if(position == shifted_left)
         move_right(FR_MOTOR, arrows);
-    else if(position == line_sensor.shifted_right)
+    else if(position == shifted_right)
         move_left(FL_MOTOR, arrows);
     else
         printf("Can't detect the line!\n");
