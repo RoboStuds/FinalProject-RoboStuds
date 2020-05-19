@@ -28,7 +28,7 @@ PI_THREAD(detect_line)
             return move_straight();
         }
         // turn left if left sensor is on black, center sensor is on white, left sensor is on white
-        else if((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 0)) (digitalRead(IR_R == 0))
+        else if((digitalRead(IR_L == 1)) && (digitalRead(IR_C == 0)) && (digitalRead(IR_R == 0))
         {
             return move_left();
         }
