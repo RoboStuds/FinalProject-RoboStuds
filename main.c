@@ -76,12 +76,12 @@ int get_position() {
 
 int keep_on_track() {
     int position = get_position();
-
-    if(position == on_line) 
+    
+    if(position == line_sensor.on_line) 
         move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
-    else if(position == shifted_left)
+    else if(position == line_sensor.shifted_left)
         move_right(FR_MOTOR, arrows);
-    else if(position == shifted_right)
+    else if(position == line_sensor.shifted_right)
         move_left(FL_MOTOR);
     else
         printf("Can't detect the line!\n");
