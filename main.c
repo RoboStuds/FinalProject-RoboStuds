@@ -21,7 +21,7 @@ static volatile double global_dist = 0;
 PI_THREAD(line_detection) {
     while (1) {
         piLock(POSITION_KEY);
-        global_pos = detect_line();
+        global_pos = detect_line(black_line);
         piUnlock(POSITION_KEY);
     }
     return 0;
