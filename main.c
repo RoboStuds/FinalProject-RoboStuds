@@ -14,14 +14,14 @@
 #define POSITION_KEY 1
 
 int duty_cycle = 5;
-static volatile int global_pos = on_line;
+static volatile int global_pos = line_sensor.on_line;
 static volatile double global_dist = 0;
 
 
 PI_THREAD(line_detection) {
     while (1) {
         piLock(POSITION_KEY);
-        global_pos = detect_line(black_line);
+        global_pos = detect_line(line_sensor.black_line);
         piUnlock(POSITION_KEY);
     }
     return 0;
@@ -82,7 +82,7 @@ int keep_on_track() {
     else if(position == line_sensor.shifted_left)
         move_right(FR_MOTOR, arrows);
     else if(position == line_sensor.shifted_right)
-        move_left(FL_MOTOR);
+        move_left(FL_MOTOR, arrows);
     else
         printf("Can't detect the line!\n");
 }
@@ -115,7 +115,7 @@ int main(void) {
         } 
 
         stop(motors, num_motors, arrows); delay(1000);
-        reverse(motors, num_motors, arrows); delay(1000);
+        backward(motors, num_motors, arrows); delay(1000);
         stop(motors, num_motors, arrows); delay(1000);
         forward(motors, num_motors, arrows);
 

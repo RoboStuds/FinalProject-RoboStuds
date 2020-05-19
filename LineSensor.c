@@ -14,7 +14,7 @@
 // int white_line = 0, black_line = 1;
 // int out_of_line = 0, on_line = 1, shifted_left = 2, shifted_right = 3;
 
-line_sensor = {.white_line = 0, .black_line = 1, 
+LineSensor line_sensor = {.white_line = 0, .black_line = 1, 
     .out_of_line = 0, .on_line = 1, .shifted_left = 2, .shifted_right = 3}
 
 void sensor_setup() {
