@@ -14,7 +14,7 @@
 #define POSITION_KEY 1
 
 int duty_cycle = 5;
-static volatile int global_pos = on_line;
+static volatile int global_pos = 0;
 static volatile double global_dist = 0;
 
 
