@@ -1,56 +1,68 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<wiringPi.h>
-const int ECHO = 22, TRIG = 21, RED = 0;
+#include <stdlib.h>
+#include <stdio.h>
+#include <wiringPi.h>
+#include "UltraSensor.h"
 
-void displayCM(double time)
-{	
-	double distance = time / 58.0;
+int echo = 22, trig = 21;
+
+// void displayCM(double time) {	
+// 	double distance = time / 58.0;
 		
-		if(distance < 50 && distance > 2)
-		{
-			printf("The distance from object is: %.2fcm\n",distance);
-			digitalWrite(RED, HIGH);
-		}
-		else
-		{
-			digitalWrite(RED, LOW);
-		}
-}
-void pulse()
-{
-	while (1)
-	{
-		double distance = 0;
-		double startTime = 0;
-		double endTime = 0;
-		digitalWrite(TRIG, LOW);
-		delay(500);
-		digitalWrite(TRIG, HIGH);
-		delay(0.05);
-		digitalWrite(TRIG, LOW);
+// 	if(distance < 50 && distance > 2)
+// 		printf("The distance from object is: %.2fcm\n", distance);
+// }
 
-		while (digitalRead(ECHO) == LOW)
-		{
-			startTime = micros();
-		}
-		while (digitalRead(ECHO) == HIGH)
-		{
-				endTime = micros();
-		}
-			displayCM(endTime - startTime);
-	}
+void setup_ultra_sensor() {
+	pinMode(trig, OUTPUT);
+	pinMode(echo, INPUT);
 }
-int main(void)
-{
+
+double measure_distance() {
+	double startTime = 0;
+	double endTime = 0;
+	digitalWrite(trig, LOW);
+	delay(500);
+	digitalWrite(trig, HIGH);
+	delay(0.05);
+	digitalWrite(trig, LOW);
+
+	while (digitalRead(echo) == LOW)
+		startTime = micros();
+
+	while (digitalRead(echo) == HIGH) 
+		endTime = micros();
+
+	return (endTime - startTime) / 58.0;
+}
+
+// void pulse() {
+// 	while (1) {
+// 		double distance = 0;
+// 		double startTime = 0;
+// 		double endTime = 0;
+// 		digitalWrite(trig, LOW);
+// 		delay(500);
+// 		digitalWrite(trig, HIGH);
+// 		delay(0.05);
+// 		digitalWrite(trig, LOW);
+
+// 		while (digitalRead(echo) == LOW)
+// 			startTime = micros();
+
+// 		while (digitalRead(echo) == HIGH) 
+// 			endTime = micros();
+
+// 		displayCM(endTime - startTime);
+// 	}
+// }
+
+// int main(void) {
 	
-	if (wiringPiSetup() == -1)
-	{
-		return 0;
-	}
-	pinMode(TRIG, OUTPUT);
-	pinMode(ECHO, INPUT);
-	pinMode(RED, OUTPUT);
-	pulse();
-	return 0;
-}
+// 	if (wiringPiSetup() == -1) {
+// 		return 0;
+// 	}
+// 	pinMode(trig, OUTPUT);
+// 	pinMode(echo, INPUT);
+// 	pulse();
+// 	return 0;
+// }
