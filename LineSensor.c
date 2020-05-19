@@ -39,6 +39,7 @@ void detect_line() {
         right = 0; 
         left = 1;
     }
+    // turn right:left on white, center on white, right on black
     else if(digitalRead(IR_L) == 0 && digitalRead(IR_C) == 0 && digitalRead(IR_R) == 1) {
         straight = 0; 
         right = 1; 
