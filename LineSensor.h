@@ -12,6 +12,6 @@
     // extern LineSensor line_sensor;
 
     void sensor_setup();
-    void detect_line();
+    int detect_line();
 
 #endif

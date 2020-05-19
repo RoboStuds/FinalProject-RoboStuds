@@ -21,7 +21,7 @@ static volatile double global_dist = 0;
 PI_THREAD(line_detection) {
     while (1) {
         piLock(POSITION_KEY);
-        global_pos = detect_line(line_sensor.black_line);
+        global_pos = detect_line(black_line);
         piUnlock(POSITION_KEY);
     }
     return 0;
@@ -96,8 +96,6 @@ int main(void) {
         printf("WiringPi Setup failed!\n");
         return -1;
     } 
-
-    double distance = 0;
 
     Motor motors[] = {FR_MOTOR, FL_MOTOR, BR_MOTOR, BL_MOTOR};
     int num_motors = sizeof(motors) / sizeof(motors[0]);

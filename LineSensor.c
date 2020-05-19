@@ -23,7 +23,7 @@ void sensor_setup() {
     pinMode(IR_R, INPUT);
 }
 
-void detect_line(int color) {
+int detect_line(int color) {
     int center_read = digitalRead(IR_C);
     int left_read = digitalRead(IR_L);
     int right_read = digitalRead(IR_R);
