@@ -31,6 +31,7 @@ PI_THREAD(set_distance) {
     while (1) {
         piLock(DISTANCE_KEY);
         global_dist = measure_distance();
+        printf("set distance\n");
         piUnlock(DISTANCE_KEY);
     }
     return 0;
@@ -57,6 +58,7 @@ void sigint_handler(int sig_num) {
 double get_distance() {
     piLock(DISTANCE_KEY);
     double distance = global_dist;
+    printf("get distance\n");
     piUnlock(DISTANCE_KEY);
 
     return distance;
@@ -119,7 +121,7 @@ int main(void) {
             keep_on_track();
             delay(1000);
         } 
-
+        printf("detected obstacle\n");
         stop(motors, num_motors, arrows); delay(1000);
         backward(motors, num_motors, arrows); delay(1000);
         stop(motors, num_motors, arrows); delay(1000);
