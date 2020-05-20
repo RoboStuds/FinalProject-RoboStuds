@@ -89,7 +89,7 @@ int get_position() {
 
 void keep_on_track() {
 
-    move_left(FR_MOTOR, FL_MOTOR, arrows);
+    move_left(FL_MOTOR, FR_MOTOR, arrows);
     // int position = get_position();
     
     // if(position == on_line) 
