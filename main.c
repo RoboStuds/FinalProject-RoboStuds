@@ -15,7 +15,7 @@
 
 int reg_speed = 20;
 int gentle_turn_speed = 35;
-int sharp_turn_speed = 80;
+int sharp_turn_speed = 100;
 
 static volatile int global_pos = 0;
 static volatile double global_dist = 0;
@@ -141,7 +141,7 @@ int main(void) {
 
     while(1) {
         keep_on_track();
-        set_speed(b_motors, b_num_motors, gentle_turn_speed);
+        set_speed(b_motors, b_num_motors, reg_speed);
 
         // if (!is_obstacle()) {
         //     forward(motors, num_motors, arrows);
