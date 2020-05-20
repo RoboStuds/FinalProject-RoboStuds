@@ -5,13 +5,6 @@
 
 int echo = 22, trig = 21;
 
-// void displayCM(double time) {	
-// 	double distance = time / 58.0;
-		
-// 	if(distance < 50 && distance > 2)
-// 		printf("The distance from object is: %.2fcm\n", distance);
-// }
-
 void setup_ultra_sensor() {
 	pinMode(trig, OUTPUT);
 	pinMode(echo, INPUT);
@@ -21,7 +14,7 @@ double measure_distance() {
 	double startTime = 0;
 	double endTime = 0;
 	digitalWrite(trig, LOW);
-	delay(500);
+	delay(100);
 	digitalWrite(trig, HIGH);
 	delay(0.05);
 	digitalWrite(trig, LOW);
@@ -34,4 +27,7 @@ double measure_distance() {
 
 	return (endTime - startTime) / 58.0;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
