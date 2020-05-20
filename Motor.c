@@ -4,9 +4,6 @@
 #include <softPwm.h>
 #include "Motor.h"
 
-#define SPEED_ON_TURNS 10
-
-
 int keyboard_interrupt = 0;
 
 // wiringPi 0 = P11, wiringPi 2 = P13, wiringPi 3 = P15 
@@ -14,7 +11,7 @@ Motor m1 = {.num = 1, .e = 0, .f = 3, .r = 2};
 // wiringPi 6 = P22, wiringPi 4 = P16, wiringPi 5 = P18 
 Motor m2 = {.num = 2, .e = 6, .f = 5, .r = 4}; 
 // wiringPi 12 = P19, wiringPi 13 = P21, wiringPi 14 = P23 
-Motor m3 = {.num = 3, .e = 12, .f = 13, .r = 14};
+Motor m3 = {.num = 3, .e = 12, .f = 14, .r = 13};
 // wiringPi 26 = P32, wiringPi 10 = P24, wiringPi 11 = P26 
 Motor m4 = {.num = 4, .e = 26, .f = 11, .r = 10};
 
@@ -140,28 +137,32 @@ void move_straight(Motor right_motor, Motor left_motor, int duty_cycle, Arrow ar
     digitalWrite(arrows.al, LOW);
 }
 
-void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
-    softPwmWrite(right_motor.e, 50);
-    digitalWrite(right_motor.f, LOW);
-    digitalWrite(right_motor.r, HIGH);
-    
+void move_right(Motor right_motor, Motor left_motor, int speed, Arrow arrows) {
+    softPwmWrite(right_motor.f, LOW);
+    softPwmWrite(right_motor.r, HIGH);
+
+    softPwmWrite(left_motor.f, HIGH);
+    softPwmWrite(left_motor.r, LOW);
+
     digitalWrite(arrows.ar, HIGH);
     digitalWrite(arrows.al, LOW);
 }
 
 void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
-    softPwmWrite(right_motor.e, 50);
-    softPwmWrite(left_motor.e, 15);
-    
-    digitalWrite(right_motor.f, HIGH);
-    digitalWrite(right_motor.r, LOW);
-    
-    digitalWrite(left_motor.f, LOW);
-    digitalWrite(left_motor.r, HIGH);
+    softPwmWrite(right_motor.f, HIGH);
+    softPwmWrite(right_motor.r, LOW);
+
+    softPwmWrite(left_motor.f, LOW);
+    softPwmWrite(left_motor.r, HIGH);
 
     digitalWrite(arrows.ar, LOW);
     digitalWrite(arrows.al, HIGH);
 }
+
+// sets the enable pin of the motors with the given duty_cycle 
+// void set_speed(Motor motor, int duty_cycle) {
+//     softPwmWrite(motor.e, duty_cycle);
+// }
 
 // sets the enable pin of the motors with the given duty_cycle 
 void set_speed(Motor motors[], int num_motors, int duty_cycle) {
