@@ -13,7 +13,7 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int duty_cycle = 15;
+int duty_cycle = 25;
 static volatile int global_pos = 0;
 static volatile double global_dist = 0;
 
@@ -119,9 +119,9 @@ int main(void) {
     create_sensor_threads();
 
     // to jump start the motor
-    set_speed(motors, num_motors, 25);
-    forward(motors, num_motors, arrows);
-    delay(1000);
+    // set_speed(motors, num_motors, 25);
+    // forward(motors, num_motors, arrows);
+    // delay(1000);
 
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
