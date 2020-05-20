@@ -155,7 +155,7 @@ void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
 }
 
 void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
-    softPwmWrite(left_motor.e, 20);
+    softPwmWrite(right_motor.e, 20);
     softPwmWrite(left_motor.e, 10);
     
     digitalWrite(right_motor.f, HIGH);
