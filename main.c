@@ -77,7 +77,25 @@ int main(void) {
         distance = global_dist;
         piUnlock(DISTANCE_KEY);
         if(distance < 70 && distance > 2)
+        {
             stop(motors, num_motors, arrows);
+            while(digitalRead(IR_L) == 0)
+            {
+                if (distance < 70 && distance > 2)
+                {
+                      move_right(FR_MOTOR, arrows);
+                      move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
+                }
+                 move_left(FL_MOTOR, arrows);
+                  piLock(DISTANCE_KEY);
+                    distance = measure_distance();
+                  piUnlock(DISTANCE_KEY);
+            }  
+            while (digitalRead(IR_L) == 0 && digitalRead(IR_R))
+            {
+                move_right(FR_MOTOR, arrows);
+            }
+             move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
         else {
             forward(motors, num_motors, arrows);
         }
