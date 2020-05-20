@@ -91,7 +91,7 @@ int main(void) {
                     distance = measure_distance();
                   piUnlock(DISTANCE_KEY);
             }  
-            while (digitalRead(IR_L) == 0 && digitalRead(IR_R))
+            while (digitalRead(IR_L) == 0 || digitalRead(IR_R) == 0)
             {
                 move_right(FR_MOTOR, arrows);
             }
