@@ -110,6 +110,7 @@ int main(void) {
         while (!is_obstacle()) {
             forward(motors, num_motors, arrows);
             keep_on_track();
+            delay(1000);
         } 
 
         stop(motors, num_motors, arrows); delay(1000);
