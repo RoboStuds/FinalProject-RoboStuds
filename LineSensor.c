@@ -8,8 +8,8 @@
 
 //BCM: 22, 14, 10
 #define IR_L 29 // P40
-#define IR_C 1 // P12 through IR2
-#define IR_R 7 // P7 through IR1
+#define IR_C 28 // P30
+#define IR_R 7 // P7 
 
 int white_line = 0, black_line = 1;
 int out_of_line = 0, on_line = 1, shifted_left = 2, shifted_right = 3;
