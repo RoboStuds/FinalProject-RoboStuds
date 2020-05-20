@@ -33,6 +33,8 @@ PI_THREAD(set_distance) {
         global_dist = measure_distance();
         printf("set distance\n");
         piUnlock(DISTANCE_KEY);
+
+        delay(1000);
     }
     return 0;
 }
