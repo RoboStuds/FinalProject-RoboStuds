@@ -90,14 +90,14 @@ int get_position() {
 void keep_on_track() {
     int position = get_position();
     
-    if(position == out_of_line) 
-        printf("Can't detect the line!\n");
+    if(position == on_line) 
+        move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
     else if(position == shifted_left)
         move_right(FR_MOTOR, arrows);
     else if(position == shifted_right)
         move_left(FL_MOTOR, arrows);
     else
-        move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
+        printf("Can't detect the line!\n");
 }
 
 
