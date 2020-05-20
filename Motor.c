@@ -146,8 +146,8 @@ void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
     digitalWrite(right_motor.f, LOW);
     digitalWrite(right_motor.r, HIGH);
     
-    digitalWrite(left_motor.f, HIGH);
-    digitalWrite(left_motor.r, LOW);
+    digitalWrite(left_motor.f, LOW);
+    digitalWrite(left_motor.r, HIGH);
 
     digitalWrite(arrows.ar, HIGH);
     digitalWrite(arrows.al, LOW);
