@@ -118,6 +118,10 @@ int main(void) {
 
     create_sensor_threads();
 
+    // to jump start the motor
+    set_speed(motors, num_motors, 25);
+    forward(motors, num_motors, arrows);
+
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
         if (!is_obstacle()) {
