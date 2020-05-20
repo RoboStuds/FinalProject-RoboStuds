@@ -141,7 +141,7 @@ int main(void) {
 
     while(1) {
         keep_on_track();
-        set_speed(b_motors, b_num_motors, reg_speed);
+        set_speed(b_motors, b_num_motors, gentle_turn_speed);
 
         // if (!is_obstacle()) {
         //     forward(motors, num_motors, arrows);
