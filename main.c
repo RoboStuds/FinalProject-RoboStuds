@@ -13,7 +13,7 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int duty_cycle = 10;
+int duty_cycle = 15;
 static volatile int global_pos = 0;
 static volatile double global_dist = 0;
 
