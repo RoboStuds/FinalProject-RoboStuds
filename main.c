@@ -83,6 +83,7 @@ int get_position() {
     int position = global_pos;
     piUnlock(POSITION_KEY);
 
+    printf("position: %d\n", position);
     return position;
 }
 
@@ -133,7 +134,7 @@ int main(void) {
             while (is_obstacle()) {
                 move_right(FR_MOTOR, arrows);
             }
-            printf("position: %d\n", get_position());
+            
             while (get_position() == out_of_line) {
                 move_left(FL_MOTOR, arrows);
             }
