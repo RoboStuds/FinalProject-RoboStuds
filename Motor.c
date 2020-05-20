@@ -141,7 +141,7 @@ void move_straight(Motor right_motor, Motor left_motor, int duty_cycle, Arrow ar
 }
 
 void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
-    softPwmWrite(right_motor.e, SPEED_ON_TURNS);
+    //softPwmWrite(right_motor.e, SPEED_ON_TURNS);
     
     digitalWrite(right_motor.f, LOW);
     digitalWrite(right_motor.r, HIGH);
@@ -154,7 +154,7 @@ void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
 }
 
 void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
-    softPwmWrite(left_motor.e, SPEED_ON_TURNS);
+    //softPwmWrite(left_motor.e, SPEED_ON_TURNS);
     
     digitalWrite(right_motor.f, HIGH);
     digitalWrite(right_motor.r, LOW);
