@@ -131,7 +131,7 @@ int main(void) {
             while (is_obstacle()) {
                 move_right(FR_MOTOR, arrows);
             }
-
+            printf("position: %d\n", get_position());
             while (get_position() == out_of_line) {
                 move_left(FL_MOTOR, arrows);
             }

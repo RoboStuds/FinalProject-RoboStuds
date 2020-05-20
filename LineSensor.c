@@ -43,7 +43,7 @@ int detect_line(int color) {
             return shifted_right;
 
         else
-            printf("Can't detect the line!\n");
+            return out_of_line;
     } else {
         // left on black, center on white, right on black 
         if(left_read == 1 && center_read == 0 && right_read == 1)
@@ -62,7 +62,6 @@ int detect_line(int color) {
             return shifted_right;
 
         else
-            printf("Can't detect the line!\n");
+            return out_of_line;
     }
-    return out_of_line;
 }
