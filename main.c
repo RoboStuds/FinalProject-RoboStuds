@@ -95,7 +95,7 @@ void keep_on_track() {
 
     move_right(FR_MOTOR, FL_MOTOR, sharp_turn_speed, arrows);
     delay(500);
-    move_straightFR_MOTOR, FL_MOTOR, sharp_turn_speed, arrows);
+    move_straight(FR_MOTOR, FL_MOTOR, sharp_turn_speed, arrows);
     delay(1000);
     // int position = get_position();
     
