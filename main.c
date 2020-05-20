@@ -13,7 +13,10 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int duty_cycle = 20;
+int reg_speed = 20;
+int gentle_turn_speed = 30;
+int sharp_turn_speed = 50;
+
 static volatile int global_pos = 0;
 static volatile double global_dist = 0;
 
@@ -89,11 +92,11 @@ int get_position() {
 
 void keep_on_track() {
 
-    move_left(FR_MOTOR, FL_MOTOR, arrows);
+    move_right(FR_MOTOR, FL_MOTOR, gentle_turn_speed, arrows);
     // int position = get_position();
     
     // if(position == on_line) 
-    //     move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
+    //     move_straight(FR_MOTOR, FL_MOTOR, reg_speed, arrows);
     // else if(position == shifted_left)
     //     move_right(FR_MOTOR, arrows);
     // else if(position == shifted_right)
@@ -112,22 +115,33 @@ int main(void) {
         return -1;
     } 
 
-    Motor motors[] = {FR_MOTOR, FL_MOTOR, BR_MOTOR, BL_MOTOR};
-    int num_motors = sizeof(motors) / sizeof(motors[0]);
+    // Motor motors[] = {FR_MOTOR, FL_MOTOR, BR_MOTOR, BL_MOTOR};
+    // int num_motors = sizeof(motors) / sizeof(motors[0]);
 
-    setup_motor(motors, num_motors, arrows);
+    Motor b_motors[] = {BR_MOTOR, BL_MOTOR};
+    int b_num_motors = sizeof(b_motors) / sizeof(b_motors[0]);
+
+    Motor f_motors[] = {FR_MOTOR, FL_MOTOR};
+    int f_num_motors = sizeof(f_motors) / sizeof(f_motors[0]);
+
+    setup_motor(b_motors, b_num_motors, arrows);
+    setup_motor(f_motors, f_num_motors, arrows);
     setup_ultra_sensor();
 
     create_sensor_threads();
 
     // to jump start the motor
-    set_speed(motors, num_motors, 25);
-    forward(motors, num_motors, arrows);
-    delay(1000);
+    set_speed(b_motors, b_num_motors, reg_speed);
+    set_speed(f_motors, f_num_motors, reg_speed);
 
-    set_speed(motors, num_motors, duty_cycle);
+    forward(b_motors, b_num_motors, arrows);
+    forward(f_motors, f_num_motors, arrows);
+
+    delay(500);
+
     while(1) {
         keep_on_track();
+        set_speed(b_motors, b_num_motors, gentle_turn_speed);
 
         // if (!is_obstacle()) {
         //     forward(motors, num_motors, arrows);
