@@ -19,7 +19,7 @@
     void forward(Motor motors[], int num_motors, Arrow arrows);
     void backward(Motor motors[], int num_motors, Arrow arrows);
     void move_straight(Motor right_motor, Motor left_motor, int duty_cycle, Arrow arrows);
-    void move_right(Motor left_motor, Motor right_motor, int duty_cycle, Arrow arrows);
+    void move_right(Motor right_motor, Motor left_motor, int duty_cycle, Arrow arrows)
     void move_left(Motor left_motor, Motor right_motor, int duty_cycle, Arrow arrows);
     void set_speed(Motor motors[], Motor right_motor, Motor left_motor, int num_motors, int duty_cycle);
     
