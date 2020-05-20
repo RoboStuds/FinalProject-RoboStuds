@@ -14,7 +14,7 @@
 #define POSITION_KEY 1
 
 int reg_speed = 20;
-int gentle_turn_speed = 35;
+int gentle_turn_speed = 30;
 int sharp_turn_speed = 100;
 
 static volatile int global_pos = 0;
@@ -92,7 +92,7 @@ int get_position() {
 
 void keep_on_track() {
 
-    move_right(FR_MOTOR, FL_MOTOR, sharp_turn_speed, arrows);
+    move_right(FR_MOTOR, FL_MOTOR, reg_speed, arrows);
     // int position = get_position();
     
     // if(position == on_line) 
