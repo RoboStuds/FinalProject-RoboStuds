@@ -88,16 +88,18 @@ int get_position() {
 }
 
 void keep_on_track() {
-    int position = get_position();
+
+    move_right(FR_MOTOR, arrows);
+    // int position = get_position();
     
-    if(position == on_line) 
-        move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
-    else if(position == shifted_left)
-        move_right(FR_MOTOR, arrows);
-    else if(position == shifted_right)
-        move_left(FL_MOTOR, arrows);
-    else
-        printf("Can't detect the line!\n");
+    // if(position == on_line) 
+    //     move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
+    // else if(position == shifted_left)
+    //     move_right(FR_MOTOR, arrows);
+    // else if(position == shifted_right)
+    //     move_left(FL_MOTOR, arrows);
+    // else
+    //     printf("Can't detect the line!\n");
 }
 
 
@@ -125,25 +127,27 @@ int main(void) {
 
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
-        if (!is_obstacle()) {
-            forward(motors, num_motors, arrows);
-            keep_on_track();
-            delay(1000);
-        } else {
-            printf("detected obstacle\n");
-            stop(motors, num_motors, arrows); delay(1000);
-            backward(motors, num_motors, arrows); delay(1000);
-            stop(motors, num_motors, arrows); delay(1000);
-            forward(motors, num_motors, arrows);
+        keep_on_track();
 
-            while (is_obstacle()) {
-                move_right(FR_MOTOR, arrows);
-            }
+        // if (!is_obstacle()) {
+        //     forward(motors, num_motors, arrows);
+        //     keep_on_track();
+        //     delay(1000);
+        // } else {
+        //     printf("detected obstacle\n");
+        //     stop(motors, num_motors, arrows); delay(1000);
+        //     backward(motors, num_motors, arrows); delay(1000);
+        //     stop(motors, num_motors, arrows); delay(1000);
+        //     forward(motors, num_motors, arrows);
+
+        //     while (is_obstacle()) {
+        //         move_right(FR_MOTOR, arrows);
+        //     }
             
-            while (get_position() == out_of_line) {
-                move_left(FL_MOTOR, arrows);
-            }
-        }
+        //     while (get_position() == out_of_line) {
+        //         move_left(FL_MOTOR, arrows);
+        //     }
+        // }
               
     }
 
