@@ -54,11 +54,15 @@ void sigint_handler(int sig_num) {
     keyboard_interrupt = 1;
 }
 
-int is_obstacle() {
+double get_distance() {
     piLock(DISTANCE_KEY);
     double distance = global_dist;
     piUnlock(DISTANCE_KEY);
 
+    return distance;
+}
+
+int is_obstacle(double distance) {
     if(distance < 50 && distance > 2) {
         printf("The distance from object is: %.2fcm\n", distance);
         return 1;
@@ -105,9 +109,12 @@ int main(void) {
 
     create_sensor_threads();
 
+    double distance = 0;
+
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
-        while (!is_obstacle()) {
+        distance = get_distance();
+        while (!is_obstacle(distance)) {
             forward(motors, num_motors, arrows);
             keep_on_track();
             delay(1000);
