@@ -23,6 +23,8 @@ PI_THREAD(line_detection) {
         piLock(POSITION_KEY);
         global_pos = detect_line(black_line);
         piUnlock(POSITION_KEY);
+
+        delay(1000);
     }
     return 0;
 } 
