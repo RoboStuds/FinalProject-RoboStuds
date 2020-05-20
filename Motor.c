@@ -141,25 +141,25 @@ void move_straight(Motor right_motor, Motor left_motor, int duty_cycle, Arrow ar
 }
 
 void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
-    softPwmWrite(right_motor.e, 10);
-    softPwmWrite(left_motor.e, 25);
+    softPwmWrite(right_motor.e, 15);
+    softPwmWrite(left_motor.e, 50);
     
     digitalWrite(right_motor.f, HIGH);
     digitalWrite(right_motor.r, LOW);
     
-    digitalWrite(left_motor.f, HIGH);
-    digitalWrite(left_motor.r, LOW);
+    digitalWrite(left_motor.f, LOW);
+    digitalWrite(left_motor.r, HIGH);
 
     digitalWrite(arrows.ar, HIGH);
     digitalWrite(arrows.al, LOW);
 }
 
 void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
-    softPwmWrite(right_motor.e, 25);
-    softPwmWrite(left_motor.e, 10);
+    softPwmWrite(right_motor.e, 50);
+    softPwmWrite(left_motor.e, 15);
     
-    digitalWrite(right_motor.f, LOW);
-    digitalWrite(right_motor.r, HIGH);
+    digitalWrite(right_motor.f, HIGH);
+    digitalWrite(right_motor.r, LOW);
     
     digitalWrite(left_motor.f, LOW);
     digitalWrite(left_motor.r, HIGH);
@@ -167,7 +167,6 @@ void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
     digitalWrite(arrows.ar, LOW);
     digitalWrite(arrows.al, HIGH);
 }
-
 
 // sets the enable pin of the motors with the given duty_cycle 
 void set_speed(Motor motors[], int num_motors, int duty_cycle) {
