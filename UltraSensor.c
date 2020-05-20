@@ -35,34 +35,3 @@ double measure_distance() {
 	return (endTime - startTime) / 58.0;
 }
 
-// void pulse() {
-// 	while (1) {
-// 		double distance = 0;
-// 		double startTime = 0;
-// 		double endTime = 0;
-// 		digitalWrite(trig, LOW);
-// 		delay(500);
-// 		digitalWrite(trig, HIGH);
-// 		delay(0.05);
-// 		digitalWrite(trig, LOW);
-
-// 		while (digitalRead(echo) == LOW)
-// 			startTime = micros();
-
-// 		while (digitalRead(echo) == HIGH) 
-// 			endTime = micros();
-
-// 		displayCM(endTime - startTime);
-// 	}
-// }
-
-// int main(void) {
-	
-// 	if (wiringPiSetup() == -1) {
-// 		return 0;
-// 	}
-// 	pinMode(trig, OUTPUT);
-// 	pinMode(echo, INPUT);
-// 	pulse();
-// 	return 0;
-// }
