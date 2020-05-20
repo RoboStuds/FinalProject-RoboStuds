@@ -26,9 +26,9 @@ int detect_line(int color) {
     int right_read = digitalRead(IR_R);
     
     if(color == black_line) {
-        // left on white, center on black, right on white 
-        if(left_read == 0 && center_read == 1 && right_read == 0)
-            return on_line;
+        // left on white, center on white, right on white 
+        if(left_read == 0 && center_read == 0 && right_read == 0)
+            return out_of_line;
 
         // left on white, center on white, right on black 
         // or left on white, center on black, right on black
@@ -43,11 +43,11 @@ int detect_line(int color) {
             return shifted_right;
 
         else
-            return out_of_line;
-    } else {
-        // left on black, center on white, right on black 
-        if(left_read == 1 && center_read == 0 && right_read == 1)
             return on_line;
+    } else {
+        // left on black, center on black, right on black 
+        if(left_read == 1 && center_read == 0 && right_read == 1)
+            return out_of_line;
 
         // left on black, center on black, right on white
         // or left on black, center on white, right on white
@@ -62,6 +62,6 @@ int detect_line(int color) {
             return shifted_right;
 
         else
-            return out_of_line;
+            return on_line;
     }
 }
