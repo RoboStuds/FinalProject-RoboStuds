@@ -24,6 +24,8 @@ int detect_line(int color) {
     int center_read = digitalRead(IR_C);
     int left_read = digitalRead(IR_L);
     int right_read = digitalRead(IR_R);
+
+    printf("center: %d\n", center_read);
     
     if(color == black_line) {
         // left on white, center on white, right on white 
