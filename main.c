@@ -66,7 +66,9 @@ double get_distance() {
     return distance;
 }
 
-int is_obstacle(double distance) {
+int is_obstacle() {
+    double distance = get_distance();
+
     if(distance < 50 && distance > 2) {
         printf("The distance from object is: %.2fcm\n", distance);
         return 1;
@@ -113,12 +115,9 @@ int main(void) {
 
     create_sensor_threads();
 
-    double distance = 0;
-
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
-        distance = get_distance();
-        if (!is_obstacle(distance)) {
+        if (!is_obstacle()) {
             forward(motors, num_motors, arrows);
             keep_on_track();
             delay(1000);
@@ -129,7 +128,7 @@ int main(void) {
             stop(motors, num_motors, arrows); delay(1000);
             forward(motors, num_motors, arrows);
 
-            while (is_obstacle(distance)) {
+            while (is_obstacle()) {
                 move_right(FR_MOTOR, arrows);
             }
 
