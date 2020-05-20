@@ -4,6 +4,9 @@
 #include <softPwm.h>
 #include "Motor.h"
 
+#define SPEED_ON_TURNS 20
+
+
 int keyboard_interrupt = 0;
 
 // wiringPi 0 = P11, wiringPi 2 = P13, wiringPi 3 = P15 
@@ -138,14 +141,26 @@ void move_straight(Motor right_motor, Motor left_motor, int duty_cycle, Arrow ar
 }
 
 void move_right(Motor right_motor, Arrow arrows) {
-    softPwmWrite(right_motor.e, 0);
+    softPwmWrite(right_motor.e, SPEED_ON_TURNS);
+    
+    digitalWrite(right_motor.f, LOW);
+    digitalWrite(right_motor.r, HIGH);
+    
+    digitalWrite(left_motor.f, HIGH);
+    digitalWrite(left_motor.r, LOW);
 
     digitalWrite(arrows.ar, HIGH);
     digitalWrite(arrows.al, LOW);
 }
 
 void move_left(Motor left_motor, Arrow arrows) {
-    softPwmWrite(left_motor.e, 0);
+    softPwmWrite(left_motor.e, SPEED_ON_TURNS);
+    
+    digitalWrite(right_motor.f, HIGH);
+    digitalWrite(right_motor.r, LOW);
+    
+    digitalWrite(left_motor.f, LOW);
+    digitalWrite(left_motor.r, HIGH);
 
     digitalWrite(arrows.ar, LOW);
     digitalWrite(arrows.al, HIGH);
