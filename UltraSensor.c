@@ -21,7 +21,7 @@ double measure_distance() {
 	double startTime = 0;
 	double endTime = 0;
 	digitalWrite(trig, LOW);
-	delay(500);
+	delay(100);
 	digitalWrite(trig, HIGH);
 	delay(0.05);
 	digitalWrite(trig, LOW);
