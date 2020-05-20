@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <signal.h>
 #include <wiringPi.h>
@@ -92,7 +93,7 @@ int get_position() {
 
 void keep_on_track() {
 
-    move_right(FR_MOTOR, FL_MOTOR, gentle_turn_speed, arrows);
+    move_right(FR_MOTOR, FL_MOTOR, sharp_turn_speed, arrows);
     // int position = get_position();
     
     // if(position == on_line) 
