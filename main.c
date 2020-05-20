@@ -118,23 +118,24 @@ int main(void) {
     set_speed(motors, num_motors, duty_cycle);
     while(1) {
         distance = get_distance();
-        while (!is_obstacle(distance)) {
+        if (!is_obstacle(distance)) {
             forward(motors, num_motors, arrows);
             keep_on_track();
             delay(1000);
-        } 
-        printf("detected obstacle\n");
-        stop(motors, num_motors, arrows); delay(1000);
-        backward(motors, num_motors, arrows); delay(1000);
-        stop(motors, num_motors, arrows); delay(1000);
-        forward(motors, num_motors, arrows);
+        } else {
+            printf("detected obstacle\n");
+            stop(motors, num_motors, arrows); delay(1000);
+            backward(motors, num_motors, arrows); delay(1000);
+            stop(motors, num_motors, arrows); delay(1000);
+            forward(motors, num_motors, arrows);
 
-        while (is_obstacle(distance)) {
-            move_right(FR_MOTOR, arrows);
-        }
+            while (is_obstacle(distance)) {
+                move_right(FR_MOTOR, arrows);
+            }
 
-        while (get_position() == out_of_line) {
-            move_left(FL_MOTOR, arrows);
+            while (get_position() == out_of_line) {
+                move_left(FL_MOTOR, arrows);
+            }
         }
               
     }
