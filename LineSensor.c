@@ -61,7 +61,7 @@ int detect_line(int color) {
                 (left_read == 0 && center_read == 0 && right_read == 1)) 
             return shifted_right;
 
-        else
+        else if(left_read == 0 && center_read == 0 && center_read == 0)
             return out_of_line;
     }
 }
