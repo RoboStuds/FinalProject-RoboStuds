@@ -137,9 +137,9 @@ void move_straight(Motor right_motor, Motor left_motor, int duty_cycle, Arrow ar
     digitalWrite(arrows.al, LOW);
 }
 
-void move_right(Motor right_motor, Motor left_motor, int duty_cycle, Arrow arrows) {
-    softPwmWrite(right_motor.e, duty_cycle);
-    softPwmWrite(left_motor.e, duty_cycle);
+void move_right(Motor right_motor, Motor left_motor, Arrow arrows) {
+    softPwmWrite(right_motor.e, 30);
+    softPwmWrite(left_motor.e, 30);
 
     digitalWrite(right_motor.f, LOW);
     digitalWrite(right_motor.r, HIGH);
@@ -151,9 +151,9 @@ void move_right(Motor right_motor, Motor left_motor, int duty_cycle, Arrow arrow
     digitalWrite(arrows.al, LOW);
 }
 
-void move_left(Motor left_motor, Motor right_motor, int duty_cycle, Arrow arrows) {
-    softPwmWrite(left_motor.e, duty_cycle);
-    softPwmWrite(right_motor.e, duty_cycle);
+void move_left(Motor left_motor, Motor right_motor, Arrow arrows) {
+    softPwmWrite(left_motor.e, 30);
+    softPwmWrite(right_motor.e, 30);
 
     digitalWrite(right_motor.f, HIGH);
     digitalWrite(right_motor.r, LOW);
@@ -166,11 +166,9 @@ void move_left(Motor left_motor, Motor right_motor, int duty_cycle, Arrow arrows
 }
 
 // sets the enable pin of the motors with the given duty_cycle 
-void set_speed(Motor motors[], Motor right_motor, Motor left_motor, int num_motors, int duty_cycle) {
+void set_speed(Motor motors[], int num_motors, int duty_cycle) {
     for (int i = 0; i < num_motors; i++) {
         printf("Speed of Motor%d:  %d%%\n", motors[i].num, duty_cycle);
         softPwmWrite(motors[i].e, duty_cycle);
     }
-    softPwmWrite(right_motor.f, 30);
-    softPwmWrite(left_motor.f, 30);
 }
