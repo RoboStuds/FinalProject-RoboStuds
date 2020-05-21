@@ -29,7 +29,7 @@ PI_THREAD(line_detection) {
         global_pos = detect_line(black_line);
         piUnlock(POSITION_KEY);
 
-        delay(1000);
+        delay(500);
     }
     return 0;
 } 
@@ -41,7 +41,7 @@ PI_THREAD(set_distance) {
         // printf("set distance\n");
         piUnlock(DISTANCE_KEY);
 
-        delay(1000);
+        delay(500);
     }
     return 0;
 }
@@ -160,7 +160,6 @@ int main(void) {
         if (!is_obstacle()) {
             keep_on_track();
 
-            delay(1000);
         } else {
             printf("detected obstacle\n");
             stop_motors(FR_MOTOR, FL_MOTOR);
