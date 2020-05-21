@@ -6,7 +6,6 @@
 #include "Motor.h"
 #include "LineSensor.h"
 
-//BCM: 22, 14, 10
 #define IR_L 29 // P40
 #define IR_C 28 // P30
 #define IR_R 8 // P3 
