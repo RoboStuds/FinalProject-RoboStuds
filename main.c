@@ -157,7 +157,7 @@ void keep_on_track() {
     } else {
         //linked_backward(reg_speed);
         linked_right(gentle_fturn_speed, gentle_bturn_speed); delay(200);
-        linked_left(gentle_fturn_speed, gentle_bturn_speed); delay(400);
+        linked_left(gentle_fturn_speed, gentle_bturn_speed); delay(300);
         printf("Can't detect the line!\n");
     }
 }
