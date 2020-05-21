@@ -12,18 +12,20 @@
 #define IR_R 8 // P3 
 
 int white_line = 0, black_line = 1;
-int out_of_line = 0, on_line = 1, shifted_left = 2, shifted_right = 3;
+int out_of_line = 0, on_line = 1;
+int shifted_right = 2, shifted_left = 3;
+int right_edge = 4, left_edge = 5;
 
-void sensor_setup() {
-    pinMode(IR_L, INPUT);
-    pinMode(IR_C, INPUT);
+void setup_line_sensor() {
     pinMode(IR_R, INPUT);
+    pinMode(IR_C, INPUT);
+    pinMode(IR_L, INPUT);
 }
 
 int detect_line(int color) {
+    int right_read = digitalRead(IR_R);
     int center_read = digitalRead(IR_C);
     int left_read = digitalRead(IR_L);
-    int right_read = digitalRead(IR_R);
 
     printf("center: %d\n", center_read);
     
@@ -32,17 +34,21 @@ int detect_line(int color) {
         if(left_read == 0 && center_read == 1 && right_read == 0)
             return on_line;
 
+        // left on black, center on white, right on white 
+        else if(left_read == 1 && center_read == 0 && right_read == 0)
+            return shifted_right;
+
         // left on white, center on white, right on black 
-        // or left on white, center on black, right on black
-        else if((left_read == 0 && center_read == 0 && right_read == 1) ||
-                (left_read == 0 && center_read == 1 && right_read == 1))
+        else if(left_read == 0 && center_read == 0 && right_read == 1)
             return shifted_left;
 
-        // left on black, center on white, right on white 
-        // or left on black, center on black, right on white
-        else if((left_read == 1 && center_read == 0 && right_read == 0) ||
-                (left_read == 1 && center_read == 1 && right_read == 0)) 
-            return shifted_right;
+        // left on white, center on black, right on black
+        else if(left_read == 0 && center_read == 1 && right_read == 1)
+            return right_edge;
+
+        // left on black, center on black, right on white
+        else if(left_read == 1 && center_read == 1 && right_read == 0)
+            return left_edge;
 
         else
             return out_of_line;
@@ -51,19 +57,23 @@ int detect_line(int color) {
         if(left_read == 1 && center_read == 0 && right_read == 1)
             return on_line;
 
-        // left on black, center on black, right on white
-        // or left on black, center on white, right on white
-        else if((left_read == 1 && center_read == 1 && right_read == 0) ||
-                (left_read == 1 && center_read == 0 && right_read == 0))
-            return shifted_left;
-
         // left on white, center on black, right on black
-        // or left on white, center on white, right on black
-        else if((left_read == 0 && center_read == 1 && right_read == 1) ||
-                (left_read == 0 && center_read == 0 && right_read == 1)) 
+        else if(left_read == 0 && center_read == 1 && right_read == 1)
             return shifted_right;
 
+        // left on black, center on black, right on white
+        else if(left_read == 1 && center_read == 1 && right_read == 0)
+            return shifted_left;
+
+        // left on black, center on white, right on white
+        else if(left_read == 1 && center_read == 0 && right_read == 0)
+            return right_edge;
+
+        // left on white, center on white, right on black
+        else if(left_read == 0 && center_read == 0 && right_read == 1)
+            return left_edge;
+
         else
-            return out_of_line;
+            return out_of_line;     
     }
 }

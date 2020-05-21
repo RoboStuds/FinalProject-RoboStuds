@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <wiringPi.h>
 #include "Motor.h"
+#include "Arrow.h"
 #include "UltraSensor.h"
 #include "LineSensor.h"
 
@@ -91,18 +92,46 @@ int get_position() {
 }
 
 void keep_on_track() {
-
-    move_right(FR_MOTOR, FL_MOTOR, reg_speed, arrows);
-    // int position = get_position();
+    int position = get_position();
     
-    // if(position == on_line) 
-    //     move_straight(FR_MOTOR, FL_MOTOR, reg_speed, arrows);
-    // else if(position == shifted_left)
-    //     move_right(FR_MOTOR, arrows);
-    // else if(position == shifted_right)
-    //     move_left(FL_MOTOR, arrows);
-    // else
-    //     printf("Can't detect the line!\n");
+    if(position == on_line) {
+        move_forward(FR_MOTOR, FL_MOTOR, reg_speed);
+        move_forward(BR_MOTOR, BL_MOTOR, reg_speed);
+        turn_on(arrows.af);
+        turn_off(arrows.ab);
+        turn_off(arrows.ar);
+        turn_off(arrows.al);
+    } else if(position == shifted_right) {
+        move_left(FR_MOTOR, FL_MOTOR, reg_speed);
+        move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
+        turn_on(arrows.af);
+        turn_off(arrows.ab);
+        turn_off(arrows.ar);
+        turn_on(arrows.al);
+    } else if(position == shifted_left) {
+        move_right(FR_MOTOR, FL_MOTOR, reg_speed);
+        move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
+        turn_on(arrows.af);
+        turn_off(arrows.ab);
+        turn_on(arrows.ar);
+        turn_off(arrows.al);
+    } else if(position == right_edge) {
+        move_left(FR_MOTOR, FL_MOTOR, reg_speed);
+        move_forward(BR_MOTOR, BL_MOTOR, sharp_turn_speed);
+        turn_on(arrows.af);
+        turn_off(arrows.ab);
+        turn_off(arrows.ar);
+        turn_on(arrows.al);
+    } else if(position == left_edge) {
+        move_left(FR_MOTOR, FL_MOTOR, reg_speed);
+        move_forward(BR_MOTOR, BL_MOTOR, sharp_turn_speed);
+        turn_on(arrows.af);
+        turn_off(arrows.ab);
+        turn_off(arrows.ar);
+        turn_on(arrows.al);
+    } else {
+        printf("Can't detect the line!\n");
+    }
 }
 
 
@@ -115,40 +144,25 @@ int main(void) {
         return -1;
     } 
 
-    // Motor motors[] = {FR_MOTOR, FL_MOTOR, BR_MOTOR, BL_MOTOR};
-    // int num_motors = sizeof(motors) / sizeof(motors[0]);
-
-    Motor b_motors[] = {BR_MOTOR, BL_MOTOR};
-    int b_num_motors = sizeof(b_motors) / sizeof(b_motors[0]);
-
-    Motor f_motors[] = {FR_MOTOR, FL_MOTOR};
-    int f_num_motors = sizeof(f_motors) / sizeof(f_motors[0]);
-
-    setup_motor(b_motors, b_num_motors, arrows);
-    setup_motor(f_motors, f_num_motors, arrows);
+    // setup the motor and sensors
+    setup_motors(FR_MOTOR, FL_MOTOR);
+    setup_motors(BR_MOTOR, BL_MOTOR);
+    setup_arrows()
     setup_ultra_sensor();
+    setup_line_sensor();
 
     create_sensor_threads();
 
-    // to jump start the motor
-    set_speed(b_motors, b_num_motors, reg_speed);
-    set_speed(f_motors, f_num_motors, reg_speed);
-
-    forward(b_motors, b_num_motors, arrows);
-    forward(f_motors, f_num_motors, arrows);
-
-    delay(500);
-
     while(1) {
-        keep_on_track();
-        set_speed(b_motors, b_num_motors, gentle_turn_speed);
 
-        // if (!is_obstacle()) {
-        //     forward(motors, num_motors, arrows);
-        //     keep_on_track();
-        //     delay(1000);
-        // } else {
-        //     printf("detected obstacle\n");
+        if (!is_obstacle()) {
+            keep_on_track();
+            delay(1000);
+        } else {
+            printf("detected obstacle\n");
+            stop_motors(FR_MOTOR, FL_MOTOR);
+            stop_motors(BR_MOTOR, BL_MOTOR);
+            delay(1000);
         //     stop(motors, num_motors, arrows); delay(1000);
         //     backward(motors, num_motors, arrows); delay(1000);
         //     stop(motors, num_motors, arrows); delay(1000);
@@ -161,7 +175,7 @@ int main(void) {
         //     while (get_position() == out_of_line) {
         //         move_left(FL_MOTOR, arrows);
         //     }
-        // }
+        }
               
     }
 

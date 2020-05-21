@@ -16,158 +16,111 @@ Motor m3 = {.num = 3, .e = 12, .f = 14, .r = 13};
 Motor m4 = {.num = 4, .e = 26, .f = 11, .r = 10};
 
 
-// wiringPi 25 = P37, wiringPi 23 = P33, wiringPi 27 = P36, wiringPi 24 = P35
-Arrow arrows = {.af = 25, .ab = 23, .ar = 27, .al = 24};
+void cleanup_motor(Motor motor) {
+    softPwmWrite(motor.e, 0);
+    digitalWrite(motor.e, LOW);
+    digitalWrite(motor.f, LOW);
+    digitalWrite(motor.r, LOW);
 
-// sets the motor and arrow pins to output mode
-void setup_motor(Motor motors[], int num_motors, Arrow arrows) {
-    for (int i = 0; i < num_motors; i++) {
-        pinMode(motors[i].e, OUTPUT);
-        pinMode(motors[i].f, OUTPUT);
-        pinMode(motors[i].r, OUTPUT);
-        softPwmCreate(motors[i].e, 0, 100);
-        digitalWrite(motors[i].e, HIGH);
-        digitalWrite(motors[i].f, LOW);
-        digitalWrite(motors[i].r, LOW);
-    }
-    pinMode(arrows.af, OUTPUT);
-    pinMode(arrows.ab, OUTPUT);
-    pinMode(arrows.ar, OUTPUT);
-    pinMode(arrows.al, OUTPUT);
+    pinMode(motor.e, INPUT);
+    pinMode(motor.f, INPUT);
+    pinMode(motor.r, INPUT);
 }
 
-// sets all the motor and arrow pins to low and switches them into input mode
-void cleanup(Motor motors[], int num_motors, Arrow arrows) {
-    for (int i = 0; i < num_motors; i++) {
-        softPwmWrite(motors[i].e, 0);
-        digitalWrite(motors[i].e, LOW);
-        digitalWrite(motors[i].f, LOW);
-        digitalWrite(motors[i].r, LOW);
-        pinMode(motors[i].e, INPUT);
-        pinMode(motors[i].f, INPUT);
-        pinMode(motors[i].r, INPUT);
-    }
+void setup_motors(Motor right_motor, Motor left_motor) {
+    pinMode(right_motor.e, OUTPUT);
+    pinMode(right_motor.f, OUTPUT);
+    pinMode(right_motor.r, OUTPUT);
 
-    digitalWrite(arrows.af, LOW); 
-    digitalWrite(arrows.ab, LOW); 
-    digitalWrite(arrows.ar, LOW); 
-    digitalWrite(arrows.al, LOW); 
-    pinMode(arrows.af, INPUT); 
-    pinMode(arrows.ab, INPUT);
-    pinMode(arrows.ar, INPUT);
-    pinMode(arrows.al, INPUT);
+    pinMode(left_motor.e, OUTPUT);
+    pinMode(left_motor.f, OUTPUT);
+    pinMode(left_motor.r, OUTPUT);
+
+    softPwmCreate(right_motor.e, 0, 100);
+    digitalWrite(right_motor.e, HIGH);
+    digitalWrite(right_motor.f, LOW);
+    digitalWrite(right_motor.r, LOW);
+
+    softPwmCreate(left_motor.e, 0, 100);
+    digitalWrite(left_motor.e, HIGH);
+    digitalWrite(left_motor.f, LOW);
+    digitalWrite(left_motor.r, LOW);
 }
 
-/*
-* changes the duty_cycle to 0% and sets the forward and reverse pins to low
-* turns off the light of the arrows in the motorshield
-* cleans up the pins when there is a keyboard interrupt and exits the program
-*/
-void stop(Motor motors[], int num_motors, Arrow arrows) {
-    for (int i = 0; i < num_motors; i++) {
-        printf("Motor%d stops...\n", motors[i].num);
-        //softPwmWrite(motors[i].e, 0);
-        digitalWrite(motors[i].f, LOW);
-        digitalWrite(motors[i].r, LOW);
-    }
+void stop_motors(Motor right_motor, Motor left_motor) {
+    softPwmWrite(right_motor.e, 0);
+    softPwmWrite(left_motor.e, 0);
+}
 
-    digitalWrite(arrows.af, LOW); 
-    digitalWrite(arrows.ab, LOW); 
-    digitalWrite(arrows.ar, LOW); 
-    digitalWrite(arrows.al, LOW); 
+void move_forward(Motor right_motor, Motor left_motor, int speed) {
+    softPwmWrite(right_motor.e, speed);
+    digitalWrite(right_motor.f, HIGH);
+    digitalWrite(right_motor.r, LOW);
+
+    softPwmWrite(left_motor.e, speed);
+    digitalWrite(left_motor.f, HIGH);
+    digitalWrite(left_motor.r, LOW);
 
     if (keyboard_interrupt) {
         printf("Cleaning up...\n");
-        cleanup(motors, num_motors, arrows);
+        cleanup_motor(right_motor); 
+        cleanup_motor(left_motor);
+        exit(1);
+    }
+
+}
+
+void move_backward(Motor right_motor, Motor left_motor, int speed) {
+    softPwmWrite(right_motor.e, speed);
+    digitalWrite(right_motor.f, LOW);
+    digitalWrite(right_motor.r, HIGH);
+
+    softPwmWrite(left_motor.e, speed);
+    digitalWrite(left_motor.f, LOW);
+    digitalWrite(left_motor.r, HIGH);
+
+    if (keyboard_interrupt) {
+        printf("Cleaning up...\n");
+        cleanup_motor(right_motor); 
+        cleanup_motor(left_motor);
         exit(1);
     }
 }
 
-/*
-* sets the enable pin of the motors with the given duty_cycle 
-* and sets the forward pin to high and the reverse pin to low
-* lights up the forward arrow in the motorshield
-* cleans up the pins when there is a keyboard interrupt and exits the program
-*/
-void forward(Motor motors[], int num_motors, Arrow arrows) {
-    for (int i = 0; i < num_motors; i++) {
-        printf("Motor%d is moving forward\n", motors[i].num);
-        digitalWrite(motors[i].f, HIGH);
-        digitalWrite(motors[i].r, LOW);
-    }
+void move_right(Motor right_motor, Motor left_motor, int speed) {
+    softPwmWrite(right_motor.e, speed);
+    digitalWrite(right_motor.f, LOW);
+    digitalWrite(right_motor.r, HIGH);
 
-    digitalWrite(arrows.af, HIGH); 
-    digitalWrite(arrows.ab, LOW); 
+    softPwmWrite(left_motor.e, speed);
+    digitalWrite(left_motor.f, HIGH);
+    digitalWrite(left_motor.r, LOW);
 
     if (keyboard_interrupt) {
         printf("Cleaning up...\n");
-        cleanup(motors, num_motors, arrows);
+        cleanup_motor(right_motor); 
+        cleanup_motor(left_motor);
         exit(1);
     }
 }
 
-/* 
-* sets the enable pin of the motors with the given duty_cycle 
-* and sets the forward pin to low and the reverse pin to high
-* lights up the backward arrow in the motorshield
-* cleans up the pins when there is a keyboard interrupt and exits the program
-*/ 
-void backward(Motor motors[], int num_motors, Arrow arrows) {
-    for (int i = 0; i < num_motors; i++) {
-        printf("Motor%d is moving backward\n", motors[i].num);
-        digitalWrite(motors[i].f, LOW);
-        digitalWrite(motors[i].r, HIGH);
-    }
-
-    digitalWrite(arrows.af, LOW); 
-    digitalWrite(arrows.ab, HIGH); 
-
-    if (keyboard_interrupt) {
-        printf("Cleaning up...\n");
-        cleanup(motors, num_motors, arrows);
-        exit(1);
-    }
-}
-
-void move_straight(Motor right_motor, Motor left_motor, int duty_cycle, Arrow arrows) {
-    softPwmWrite(right_motor.e, duty_cycle);
-    softPwmWrite(left_motor.e, duty_cycle);
-
-    digitalWrite(arrows.ar, LOW);
-    digitalWrite(arrows.al, LOW);
-}
-
-void move_right(Motor right_motor, Motor left_motor, int speed, Arrow arrows) {
-    softPwmWrite(right_motor.f, LOW);
-    softPwmWrite(right_motor.r, HIGH);
-
-    softPwmWrite(left_motor.f, HIGH);
-    softPwmWrite(left_motor.r, LOW);
-
-    digitalWrite(arrows.ar, HIGH);
-    digitalWrite(arrows.al, LOW);
-}
-
-void move_left(Motor right_motor, Motor left_motor, Arrow arrows) {
+void move_left(Motor right_motor, Motor left_motor, int speed) {
     softPwmWrite(right_motor.f, HIGH);
     softPwmWrite(right_motor.r, LOW);
 
     softPwmWrite(left_motor.f, LOW);
     softPwmWrite(left_motor.r, HIGH);
 
-    digitalWrite(arrows.ar, LOW);
-    digitalWrite(arrows.al, HIGH);
+    if (keyboard_interrupt) {
+        printf("Cleaning up...\n");
+        cleanup_motor(right_motor); 
+        cleanup_motor(left_motor);
+        exit(1);
+    }
 }
 
 // sets the enable pin of the motors with the given duty_cycle 
-// void set_speed(Motor motor, int duty_cycle) {
-//     softPwmWrite(motor.e, duty_cycle);
-// }
-
-// sets the enable pin of the motors with the given duty_cycle 
-void set_speed(Motor motors[], int num_motors, int duty_cycle) {
-    for (int i = 0; i < num_motors; i++) {
-        printf("Speed of Motor%d:  %d%%\n", motors[i].num, duty_cycle);
-        softPwmWrite(motors[i].e, duty_cycle);
-    }
+void set_speed(Motor motor, int speed) {
+    printf("Speed of Motor%d:  %d%%\n", motor.num, speed);
+    softPwmWrite(motor.e, speed);
 }
