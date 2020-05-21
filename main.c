@@ -153,10 +153,12 @@ void keep_on_track() {
         linked_right(reg_speed, sharp_turn_speed);
     } else if(position == left_edge) {
         linked_stop(); delay(1000);
-        linked_backward(rev_speed); delay(500);
-        linked_left(reg_speed, sharp_turn_speed);
+        linked_backward(rev_speed); delay(600);
+        linked_left(reg_speed, sharp_turn_speed); delay(1000);
+        linked_stop(); delay(500);
+        linked_left(reg_speed, sharp_turn_speed); delay(1000);
     } else {
-        linked_backward(reg_speed);
+        linked_backward(reg_speed); delay(200);
         // linked_right(gentle_fturn_speed, gentle_bturn_speed);
         // linked_left(gentle_fturn_speed, gentle_bturn_speed);
         printf("Can't detect the line!\n");
