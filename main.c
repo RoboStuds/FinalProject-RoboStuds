@@ -15,8 +15,8 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int reg_speed = 15;
-int gentle_turn_speed = 30;
+int reg_speed = 13;
+int gentle_turn_speed = 28;
 int sharp_turn_speed = 36;
 
 static volatile int global_pos = 0;
@@ -100,6 +100,15 @@ void linked_forward(int speed) {
     turn_off(arrows.al);
 }
 
+void linked_backward(int speed) {
+    move_backward(FR_MOTOR, FL_MOTOR, speed);
+    move_backward(BR_MOTOR, BL_MOTOR, speed);
+    turn_off(arrows.af);
+    turn_on(arrows.ab);
+    turn_off(arrows.ar);
+    turn_off(arrows.al);
+}
+
 void linked_right(int f_speed, int b_speed) {
     move_right(FR_MOTOR, FL_MOTOR, f_speed);
     move_forward(BR_MOTOR, BL_MOTOR, b_speed);
@@ -132,6 +141,7 @@ void keep_on_track() {
     } else if(position == left_edge) {
         linked_left(reg_speed, sharp_turn_speed);
     } else {
+        linked_backward(reg_speed);
         printf("Can't detect the line!\n");
     }
 }
@@ -156,32 +166,31 @@ int main(void) {
     create_sensor_threads();
 
     while(!keyboard_interrupt) {
-        if (!is_obstacle()) {
+        while (!is_obstacle()) {
             keep_on_track();
 
-        } else {
-            printf("detected obstacle\n");
-            stop_motors(FR_MOTOR, FL_MOTOR);
-            stop_motors(BR_MOTOR, BL_MOTOR);
-            turn_off(arrows.af);
-            turn_off(arrows.ab);
-            turn_off(arrows.ar);
-            turn_off(arrows.al);
-            delay(2000);
-        //     stop(motors, num_motors, arrows); delay(1000);
-        //     backward(motors, num_motors, arrows); delay(1000);
-        //     stop(motors, num_motors, arrows); delay(1000);
-        //     forward(motors, num_motors, arrows);
+        } 
 
-        //     while (is_obstacle()) {
-        //         move_right(FR_MOTOR, arrows);
-        //     }
-            
-        //     while (get_position() == out_of_line) {
-        //         move_left(FL_MOTOR, arrows);
-        //     }
-            
+        printf("detected obstacle\n");
+        stop_motors(FR_MOTOR, FL_MOTOR);
+        stop_motors(BR_MOTOR, BL_MOTOR);
+        turn_off(arrows.af);
+        turn_off(arrows.ab);
+        turn_off(arrows.ar);
+        turn_off(arrows.al);
+        delay(2000);
+
+        forward(motors, num_motors, arrows);
+
+        while (is_obstacle()) {
+            linked_right(gentle_turn_speed, gentle_turn_speed);
         }
+        
+        while (get_position() == out_of_line) {
+            linked_left(gentle_turn_speed, gentle_turn_speed);
+        }
+            
+        
               
     }
 
