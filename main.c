@@ -150,6 +150,7 @@ void keep_on_track() {
     } else if(position == left_edge) {
         linked_left(reg_speed, sharp_turn_speed);
     } else {
+        linked_backward(reg_speed);
         printf("Can't detect the line!\n");
     }
 }
