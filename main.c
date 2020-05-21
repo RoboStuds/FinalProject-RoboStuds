@@ -180,8 +180,6 @@ int main(void) {
         turn_off(arrows.al);
         delay(2000);
 
-        forward(motors, num_motors, arrows);
-
         while (is_obstacle()) {
             linked_right(gentle_turn_speed, gentle_turn_speed);
         }
