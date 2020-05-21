@@ -124,12 +124,36 @@ int main(void) {
     delay(1000);
 
     set_speed(motors, num_motors, duty_cycle);
-    while(1) {
-            move_right(FR_Motor, arrows);
-            delay(500);
-            move_straight(FL_Motor, FR_Motor, arrows);
-            delay(1000);
-            
+    while(1) 
+    {
+        /*
+            OBstacle avoidence
+            logic
+            moves right
+            and straight
+            then moves left
+            if object is there 
+            right and straight
+            keep going unttil it detects line
+            modifications allowed
+        
+        */
+            while(digitalRead(IR_L) == 0)	
+	    {
+	        if (distance < 70 && distance > 2)
+	        {
+	            move_right(FR_MOTOR, arrows);
+	            move_straight(FR_MOTOR, FL_MOTOR, duty_cycle, arrows);
+	        }
+	            move_left(FL_MOTOR, arrows);
+	            piLock(DISTANCE_KEY);
+	            distance = measure_distance();
+	            piUnlock(DISTANCE_KEY);
+	    }
+	    while (digitalRead(IR_L) == 0 || digitalRead(IR_R) == 0)
+	    {
+	        move_right(FR_MOTOR, arrows);
+	        
         }
               
     }
