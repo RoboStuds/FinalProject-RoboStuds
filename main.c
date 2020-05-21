@@ -160,7 +160,7 @@ int main(void) {
         if (!is_obstacle()) {
             keep_on_track();
 
-            //delay(1000);
+            delay(500);
         } else {
             printf("detected obstacle\n");
             stop_motors(FR_MOTOR, FL_MOTOR);
