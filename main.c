@@ -155,8 +155,8 @@ void keep_on_track() {
         delay(1000);
     } else {
         //linked_backward(reg_speed);
-        linked_right(reg_speed, reg_speed); delay(300);
-        linked_left(reg_speed, reg_speed); delay(300);
+        linked_right(gentle_turn_speed, gentle_turn_speed); delay(250);
+        linked_left(gentle_turn_speed, gentle_turn_speed); delay(500);
         printf("Can't detect the line!\n");
     }
 }
