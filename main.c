@@ -15,7 +15,7 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int reg_speed = 18;
+int reg_speed = 16;
 int gentle_turn_speed = 25;
 int sharp_turn_speed = 45;
 
@@ -153,6 +153,7 @@ void keep_on_track() {
         delay(2000);
     } else {
         linked_backward(reg_speed);
+        
         printf("Can't detect the line!\n");
     }
 }
@@ -180,8 +181,8 @@ int main(void) {
         while (!is_obstacle()) {
             keep_on_track();
             delay(500);
-            linked_stop(reg_speed);
-            delay(600);
+            linked_stop();
+            delay(500);
 
         } 
 
