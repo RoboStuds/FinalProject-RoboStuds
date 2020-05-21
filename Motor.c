@@ -105,11 +105,13 @@ void move_right(Motor right_motor, Motor left_motor, int speed) {
 }
 
 void move_left(Motor right_motor, Motor left_motor, int speed) {
-    softPwmWrite(right_motor.f, HIGH);
-    softPwmWrite(right_motor.r, LOW);
+    softPwmWrite(right_motor.e, speed);
+    digitalWrite(right_motor.f, HIGH);
+    digitalWrite(right_motor.r, LOW);
 
-    softPwmWrite(left_motor.f, LOW);
-    softPwmWrite(left_motor.r, HIGH);
+    softPwmWrite(left_motor.e, speed);
+    digitalWrite(left_motor.f, LOW);
+    digitalWrite(left_motor.r, HIGH);
 
     if (keyboard_interrupt) {
         printf("Cleaning up...\n");
