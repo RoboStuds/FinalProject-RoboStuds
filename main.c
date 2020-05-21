@@ -38,7 +38,6 @@ PI_THREAD(set_distance) {
     while (1) {
         piLock(DISTANCE_KEY);
         global_dist = measure_distance();
-        // printf("set distance\n");
         piUnlock(DISTANCE_KEY);
 
         delay(500);
@@ -67,7 +66,6 @@ void sigint_handler(int sig_num) {
 double get_distance() {
     piLock(DISTANCE_KEY);
     double distance = global_dist;
-    // printf("get distance\n");
     piUnlock(DISTANCE_KEY);
 
     return distance;
@@ -146,15 +144,15 @@ void keep_on_track() {
     } else if(position == shifted_left) {
         linked_right(gentle_turn_speed, gentle_turn_speed);
     } else if(position == right_edge) {
-        // linked_stop(); delay(1000);
-        // linked_backward(reg_speed); delay(500);
+        linked_stop(); delay(1000);
+        linked_backward(reg_speed); delay(500);
         linked_right(reg_speed, sharp_turn_speed);
-        // delay(1000);
+        delay(1000);
     } else if(position == left_edge) {
-        // linked_stop(); delay(1000);
-        // linked_backward(reg_speed); delay(500);
+        linked_stop(); delay(1000);
+        linked_backward(reg_speed); delay(500);
         linked_left(reg_speed, sharp_turn_speed);
-        //delay(1000);
+        delay(1000);
     } else {
         linked_backward(reg_speed);
         printf("Can't detect the line!\n");
@@ -183,10 +181,10 @@ int main(void) {
     while(!keyboard_interrupt) {
         while (!is_obstacle()) {
             linked_forward(reg_speed);
-            // keep_on_track();
-            // delay(500);
-            // linked_stop();
-            // delay(500);
+            keep_on_track();
+            delay(500);
+            linked_stop();
+            delay(500);
 
         } 
 
