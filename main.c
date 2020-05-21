@@ -76,7 +76,7 @@ double get_distance() {
 int is_obstacle() {
     double distance = get_distance();
 
-    if(distance < 75 && distance > 2) {
+    if(distance < 50 && distance > 2) {
         printf("The distance from object is: %.2fcm\n", distance);
         return 1;
     }
