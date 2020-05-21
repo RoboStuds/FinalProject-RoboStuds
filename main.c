@@ -182,7 +182,8 @@ int main(void) {
 
     while(!keyboard_interrupt) {
         while (!is_obstacle()) {
-            keep_on_track();
+            linked_forward(reg_speed);
+            // keep_on_track();
             // delay(500);
             // linked_stop();
             // delay(500);
