@@ -156,7 +156,7 @@ int main(void) {
     while(!keyboard_interrupt) {
 
         if (!is_obstacle()) {
-            move_left(FR_MOTOR, FL_MOTOR, 28);
+            move_left(FR_MOTOR, FL_MOTOR, gentle_turn_speed);
             move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
             turn_on(arrows.af);
             turn_off(arrows.ab);
