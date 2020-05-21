@@ -16,7 +16,7 @@
 #define POSITION_KEY 1
 
 int reg_speed = 30;
-int rev_speed = 25;
+int rev_speed = 20;
 int gentle_fturn_speed = 30;
 int gentle_bturn_speed = 35;
 int sharp_turn_speed = 45;
@@ -147,14 +147,14 @@ void keep_on_track() {
         linked_right(gentle_fturn_speed, gentle_bturn_speed);
     } else if(position == right_edge) {
         linked_stop(); delay(1000);
-        linked_backward(rev_speed); delay(600);
-        linked_right(reg_speed, sharp_turn_speed); delay(1000);
+        linked_backward(rev_speed); delay(500);
+        linked_right(reg_speed, sharp_turn_speed); delay(1500);
         linked_stop(); delay(500);
-        linked_right(reg_speed, sharp_turn_speed);
+        linked_right(reg_speed, sharp_turn_speed); delay(1000);
     } else if(position == left_edge) {
         linked_stop(); delay(1000);
-        linked_backward(rev_speed); delay(600);
-        linked_left(reg_speed, sharp_turn_speed); delay(1000);
+        linked_backward(rev_speed); delay(500);
+        linked_left(reg_speed, sharp_turn_speed); delay(1500);
         linked_stop(); delay(500);
         linked_left(reg_speed, sharp_turn_speed); delay(1000);
     } else {
