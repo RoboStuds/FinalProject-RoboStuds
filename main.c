@@ -151,10 +151,10 @@ void keep_on_track() {
         linked_right(reg_speed, sharp_turn_speed);
         // delay(1000);
     } else if(position == left_edge) {
-        linked_stop(); delay(1000);
-        linked_backward(reg_speed); delay(500);
+        // linked_stop(); delay(1000);
+        // linked_backward(reg_speed); delay(500);
         linked_left(reg_speed, sharp_turn_speed);
-        delay(1000);
+        //delay(1000);
     } else {
         linked_backward(reg_speed);
         printf("Can't detect the line!\n");
@@ -189,17 +189,17 @@ int main(void) {
 
         } 
 
-        printf("detected obstacle\n");
-        linked_stop();
-        delay(2000);
+        // printf("detected obstacle\n");
+        // linked_stop();
+        // delay(2000);
 
-        while (is_obstacle()) {
-            linked_right(gentle_turn_speed, gentle_turn_speed);
-        }
+        // while (is_obstacle()) {
+        //     linked_right(gentle_turn_speed, gentle_turn_speed);
+        // }
         
-        while (get_position() == out_of_line) {
-            linked_left(gentle_turn_speed, gentle_turn_speed);
-        }
+        // while (get_position() == out_of_line) {
+        //     linked_left(gentle_turn_speed, gentle_turn_speed);
+        // }
             
         
               
