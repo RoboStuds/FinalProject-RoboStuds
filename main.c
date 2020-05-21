@@ -92,8 +92,8 @@ int get_position() {
 }
 
 void linked_forward(int speed) {
-    move_forward(FR_MOTOR, FL_MOTOR, speed);
-    move_forward(BR_MOTOR, BL_MOTOR, speed);
+    // move_forward(FR_MOTOR, FL_MOTOR, speed);
+    // move_forward(BR_MOTOR, BL_MOTOR, speed);
     turn_on(arrows.af);
     turn_off(arrows.ab);
     turn_off(arrows.ar);
@@ -101,8 +101,8 @@ void linked_forward(int speed) {
 }
 
 void linked_right(int f_speed, int b_speed) {
-    move_right(FR_MOTOR, FL_MOTOR, f_speed);
-    move_forward(BR_MOTOR, BL_MOTOR, b_speed);
+    // move_right(FR_MOTOR, FL_MOTOR, f_speed);
+    // move_forward(BR_MOTOR, BL_MOTOR, b_speed);
     turn_on(arrows.af);
     turn_off(arrows.ab);
     turn_on(arrows.ar);
@@ -110,8 +110,8 @@ void linked_right(int f_speed, int b_speed) {
 }
 
 void linked_left(int f_speed, int b_speed) {
-    move_left(FR_MOTOR, FL_MOTOR, f_speed);
-    move_forward(BR_MOTOR, BL_MOTOR, b_speed);
+    // move_left(FR_MOTOR, FL_MOTOR, f_speed);
+    // move_forward(BR_MOTOR, BL_MOTOR, b_speed);
     turn_on(arrows.af);
     turn_off(arrows.ab);
     turn_off(arrows.ar);
@@ -122,15 +122,15 @@ void keep_on_track() {
     int position = get_position();
     
     if(position == on_line) {
-        // linked_forward(reg_speed);
+        linked_forward(reg_speed);
     } else if(position == shifted_right) {
-        // linked_left(gentle_turn_speed, gentle_turn_speed);
+        linked_left(gentle_turn_speed, gentle_turn_speed);
     } else if(position == shifted_left) {
-        // linked_right(gentle_turn_speed, gentle_turn_speed);
+        linked_right(gentle_turn_speed, gentle_turn_speed);
     } else if(position == right_edge) {
-        // linked_right(reg_speed, sharp_turn_speed);
+        linked_right(reg_speed, sharp_turn_speed);
     } else if(position == left_edge) {
-        // linked_left(reg_speed, sharp_turn_speed);
+        linked_left(reg_speed, sharp_turn_speed);
     } else {
         printf("Can't detect the line!\n");
     }
