@@ -188,17 +188,17 @@ int main(void) {
 
         } 
 
-        // printf("detected obstacle\n");
-        // linked_stop();
-        // delay(2000);
+        printf("detected obstacle\n");
+        linked_stop();
+        delay(2000);
 
-        // while (is_obstacle()) {
-        //     linked_right(gentle_turn_speed, gentle_turn_speed);
-        // }
+        while (is_obstacle()) {
+            linked_right(gentle_turn_speed, gentle_turn_speed);
+        }
         
-        // while (get_position() == out_of_line) {
-        //     linked_left(gentle_turn_speed, gentle_turn_speed);
-        // }
+        while (get_position() == out_of_line) {
+            linked_left(gentle_turn_speed, gentle_turn_speed);
+        }
             
         
               
