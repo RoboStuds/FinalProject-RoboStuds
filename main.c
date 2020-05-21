@@ -117,12 +117,12 @@ void keep_on_track() {
         turn_on(arrows.ar);
         turn_off(arrows.al);
     } else if(position == right_edge) {
-        move_left(FR_MOTOR, FL_MOTOR, reg_speed);
+        move_right(FR_MOTOR, FL_MOTOR, reg_speed);
         move_forward(BR_MOTOR, BL_MOTOR, sharp_turn_speed);
         turn_on(arrows.af);
         turn_off(arrows.ab);
-        turn_off(arrows.ar);
-        turn_on(arrows.al);
+        turn_on(arrows.ar);
+        turn_off(arrows.al);
     } else if(position == left_edge) {
         move_left(FR_MOTOR, FL_MOTOR, reg_speed);
         move_forward(BR_MOTOR, BL_MOTOR, sharp_turn_speed);
