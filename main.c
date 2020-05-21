@@ -146,11 +146,15 @@ void keep_on_track() {
     } else if(position == shifted_left) {
         linked_right(gentle_turn_speed, gentle_turn_speed);
     } else if(position == right_edge) {
+        linked_stop(); delay(1000);
+        linked_backward(reg_speed); delay(500);
         linked_right(reg_speed, sharp_turn_speed);
-        delay(2000);
+        delay(1000);
     } else if(position == left_edge) {
+        linked_stop(); delay(1000);
+        linked_backward(reg_speed); delay(500);
         linked_left(reg_speed, sharp_turn_speed);
-        delay(2000);
+        delay(1000);
     } else {
         linked_backward(reg_speed);
         
