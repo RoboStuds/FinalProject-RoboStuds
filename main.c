@@ -15,7 +15,7 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int reg_speed = 20;
+int reg_speed = 18;
 int gentle_turn_speed = 30;
 int sharp_turn_speed = 35;
 
@@ -76,7 +76,7 @@ double get_distance() {
 int is_obstacle() {
     double distance = get_distance();
 
-    if(distance < 60 && distance > 2) {
+    if(distance < 100 && distance > 2) {
         printf("The distance from object is: %.2fcm\n", distance);
         return 1;
     }
@@ -92,8 +92,8 @@ int get_position() {
 }
 
 void linked_forward(int speed) {
-    // move_forward(FR_MOTOR, FL_MOTOR, speed);
-    // move_forward(BR_MOTOR, BL_MOTOR, speed);
+    move_forward(FR_MOTOR, FL_MOTOR, speed);
+    move_forward(BR_MOTOR, BL_MOTOR, speed);
     turn_on(arrows.af);
     turn_off(arrows.ab);
     turn_off(arrows.ar);
@@ -101,8 +101,8 @@ void linked_forward(int speed) {
 }
 
 void linked_right(int f_speed, int b_speed) {
-    // move_right(FR_MOTOR, FL_MOTOR, f_speed);
-    // move_forward(BR_MOTOR, BL_MOTOR, b_speed);
+    move_right(FR_MOTOR, FL_MOTOR, f_speed);
+    move_forward(BR_MOTOR, BL_MOTOR, b_speed);
     turn_on(arrows.af);
     turn_off(arrows.ab);
     turn_on(arrows.ar);
@@ -110,8 +110,8 @@ void linked_right(int f_speed, int b_speed) {
 }
 
 void linked_left(int f_speed, int b_speed) {
-    // move_left(FR_MOTOR, FL_MOTOR, f_speed);
-    // move_forward(BR_MOTOR, BL_MOTOR, b_speed);
+    move_left(FR_MOTOR, FL_MOTOR, f_speed);
+    move_forward(BR_MOTOR, BL_MOTOR, b_speed);
     turn_on(arrows.af);
     turn_off(arrows.ab);
     turn_off(arrows.ar);
