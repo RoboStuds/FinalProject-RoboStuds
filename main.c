@@ -149,12 +149,10 @@ void keep_on_track() {
         linked_stop(); delay(1000);
         linked_backward(rev_speed); delay(500);
         linked_right(reg_speed, sharp_turn_speed);
-        delay(1000);
     } else if(position == left_edge) {
         linked_stop(); delay(1000);
         linked_backward(rev_speed); delay(500);
         linked_left(reg_speed, sharp_turn_speed);
-        delay(1000);
     } else {
         //linked_backward(reg_speed);
         linked_right(gentle_fturn_speed, gentle_bturn_speed);
@@ -186,7 +184,7 @@ int main(void) {
         while (!is_obstacle()) {
             linked_forward(reg_speed);
             keep_on_track();
-            delay(500);
+            delay(300);
             linked_stop();
             delay(500);
 
