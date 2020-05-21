@@ -16,6 +16,7 @@
 #define POSITION_KEY 1
 
 int reg_speed = 23;
+int rev_speed = 18;
 int gentle_fturn_speed = 28;
 int gentle_bturn_speed = 32;
 int sharp_turn_speed = 45;
@@ -146,20 +147,21 @@ void keep_on_track() {
         linked_right(gentle_fturn_speed, gentle_bturn_speed);
     } else if(position == right_edge) {
         linked_stop(); delay(1000);
-        linked_backward(reg_speed); delay(500);
+        linked_backward(rev_speed); delay(500);
         linked_right(reg_speed, sharp_turn_speed);
         delay(1000);
     } else if(position == left_edge) {
         linked_stop(); delay(1000);
-        linked_backward(reg_speed); delay(500);
+        linked_backward(rev_speed); delay(500);
         linked_left(reg_speed, sharp_turn_speed);
         delay(1000);
     } else {
         //linked_backward(reg_speed);
-        linked_right(gentle_fturn_speed, gentle_bturn_speed); 
+        linked_right(gentle_fturn_speed, gentle_bturn_speed);
         linked_left(gentle_fturn_speed, gentle_bturn_speed);
         printf("Can't detect the line!\n");
     }
+    int prev_position = position;
 }
 
 
