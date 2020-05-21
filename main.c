@@ -15,7 +15,7 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int reg_speed = 20;
+int reg_speed = 18;
 int gentle_turn_speed = 25;
 int sharp_turn_speed = 45;
 
@@ -180,8 +180,8 @@ int main(void) {
         while (!is_obstacle()) {
             keep_on_track();
             delay(500);
-            linked_stop(500);
-            delay(500);
+            linked_stop(reg_speed);
+            delay(600);
 
         } 
 
