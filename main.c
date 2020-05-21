@@ -16,7 +16,8 @@
 #define POSITION_KEY 1
 
 int reg_speed = 23;
-int gentle_turn_speed = 28;
+int gentle_fturn_speed = 28;
+int gentle_bturn_speed = 32;
 int sharp_turn_speed = 45;
 
 static volatile int global_pos = 0;
@@ -140,9 +141,9 @@ void keep_on_track() {
     if(position == on_line) {
         linked_forward(reg_speed);
     } else if(position == shifted_right) {
-        linked_left(gentle_turn_speed, gentle_turn_speed);
+        linked_left(gentle_fturn_speed, gentle_bturn_speed);
     } else if(position == shifted_left) {
-        linked_right(gentle_turn_speed, gentle_turn_speed);
+        linked_right(gentle_fturn_speed, gentle_bturn_speed);
     } else if(position == right_edge) {
         linked_stop(); delay(1000);
         linked_backward(reg_speed); delay(500);
@@ -155,8 +156,8 @@ void keep_on_track() {
         delay(1000);
     } else {
         //linked_backward(reg_speed);
-        linked_right(gentle_turn_speed, gentle_turn_speed); delay(300);
-        linked_left(gentle_turn_speed, gentle_turn_speed); delay(600);
+        linked_right(gentle_fturn_speed, gentle_bturn_speed); delay(300);
+        linked_left(gentle_fturn_speed, gentle_bturn_speed); delay(600);
         printf("Can't detect the line!\n");
     }
 }
