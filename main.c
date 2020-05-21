@@ -14,9 +14,9 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int reg_speed = 20;
-int gentle_turn_speed = 30;
-int sharp_turn_speed = 100;
+int reg_speed = 15;
+int gentle_turn_speed = 25;
+int sharp_turn_speed = 50;
 
 static volatile int global_pos = 0;
 static volatile double global_dist = 0;
@@ -175,6 +175,15 @@ int main(void) {
         //     while (get_position() == out_of_line) {
         //         move_left(FL_MOTOR, arrows);
         //     }
+
+            if (keyboard_interrupt) {
+                printf("Cleaning up...\n");
+                cleanup_arrows();
+                cleanup_motor(FR_MOTOR); cleanup_motor(FL_MOTOR);
+                cleanup_motor(BR_MOTOR); cleanup_motor(BL_MOTOR);
+                exit(1);
+            }
+            
         }
               
     }

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <wiringPi.h>
-#include "Motor.h"
 #include "Arrow.h"
 
 
@@ -29,15 +28,9 @@ void cleanup_arrows() {
 
 void turn_on(int arrow) {
     digitalWrite(arrow, HIGH);
-
-    if(keyboard_interrupt)
-        cleanup_arrows(arrows);
 }
 
 void turn_off(int arrow) {
     digitalWrite(arrow, LOW);
-
-    if(keyboard_interrupt)
-        cleanup_arrows(arrows);
 }
 

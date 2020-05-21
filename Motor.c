@@ -61,12 +61,12 @@ void move_forward(Motor right_motor, Motor left_motor, int speed) {
     digitalWrite(left_motor.f, HIGH);
     digitalWrite(left_motor.r, LOW);
 
-    if (keyboard_interrupt) {
-        printf("Cleaning up...\n");
-        cleanup_motor(right_motor); 
-        cleanup_motor(left_motor);
-        exit(1);
-    }
+    // if (keyboard_interrupt) {
+    //     printf("Cleaning up...\n");
+    //     cleanup_motor(right_motor); 
+    //     cleanup_motor(left_motor);
+    //     exit(1);
+    // }
 
 }
 
@@ -79,12 +79,12 @@ void move_backward(Motor right_motor, Motor left_motor, int speed) {
     digitalWrite(left_motor.f, LOW);
     digitalWrite(left_motor.r, HIGH);
 
-    if (keyboard_interrupt) {
-        printf("Cleaning up...\n");
-        cleanup_motor(right_motor); 
-        cleanup_motor(left_motor);
-        exit(1);
-    }
+    // if (keyboard_interrupt) {
+    //     printf("Cleaning up...\n");
+    //     cleanup_motor(right_motor); 
+    //     cleanup_motor(left_motor);
+    //     exit(1);
+    // }
 }
 
 void move_right(Motor right_motor, Motor left_motor, int speed) {
@@ -96,12 +96,12 @@ void move_right(Motor right_motor, Motor left_motor, int speed) {
     digitalWrite(left_motor.f, HIGH);
     digitalWrite(left_motor.r, LOW);
 
-    if (keyboard_interrupt) {
-        printf("Cleaning up...\n");
-        cleanup_motor(right_motor); 
-        cleanup_motor(left_motor);
-        exit(1);
-    }
+    // if (keyboard_interrupt) {
+    //     printf("Cleaning up...\n");
+    //     cleanup_motor(right_motor); 
+    //     cleanup_motor(left_motor);
+    //     exit(1);
+    // }
 }
 
 void move_left(Motor right_motor, Motor left_motor, int speed) {
@@ -111,12 +111,12 @@ void move_left(Motor right_motor, Motor left_motor, int speed) {
     softPwmWrite(left_motor.f, LOW);
     softPwmWrite(left_motor.r, HIGH);
 
-    if (keyboard_interrupt) {
-        printf("Cleaning up...\n");
-        cleanup_motor(right_motor); 
-        cleanup_motor(left_motor);
-        exit(1);
-    }
+    // if (keyboard_interrupt) {
+    //     printf("Cleaning up...\n");
+    //     cleanup_motor(right_motor); 
+    //     cleanup_motor(left_motor);
+    //     exit(1);
+    // }
 }
 
 // sets the enable pin of the motors with the given duty_cycle 
