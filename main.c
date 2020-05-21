@@ -148,6 +148,8 @@ void keep_on_track() {
     } else if(position == right_edge) {
         linked_stop(); delay(1000);
         linked_backward(rev_speed); delay(500);
+        linked_right(reg_speed, sharp_turn_speed); delay(500);
+        linked_stop(); delay(1000);
         linked_right(reg_speed, sharp_turn_speed);
     } else if(position == left_edge) {
         linked_stop(); delay(1000);
