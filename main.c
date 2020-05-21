@@ -96,36 +96,36 @@ void keep_on_track() {
     int position = get_position();
     
     if(position == on_line) {
-        move_forward(FR_MOTOR, FL_MOTOR, reg_speed);
-        move_forward(BR_MOTOR, BL_MOTOR, reg_speed);
+        // move_forward(FR_MOTOR, FL_MOTOR, reg_speed);
+        // move_forward(BR_MOTOR, BL_MOTOR, reg_speed);
         turn_on(arrows.af);
         turn_off(arrows.ab);
         turn_off(arrows.ar);
         turn_off(arrows.al);
     } else if(position == shifted_right) {
-        move_left(FR_MOTOR, FL_MOTOR, reg_speed);
-        move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
+        // move_left(FR_MOTOR, FL_MOTOR, reg_speed);
+        // move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
         turn_on(arrows.af);
         turn_off(arrows.ab);
         turn_off(arrows.ar);
         turn_on(arrows.al);
     } else if(position == shifted_left) {
-        move_right(FR_MOTOR, FL_MOTOR, reg_speed);
-        move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
+        // move_right(FR_MOTOR, FL_MOTOR, reg_speed);
+        // move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
         turn_on(arrows.af);
         turn_off(arrows.ab);
         turn_on(arrows.ar);
         turn_off(arrows.al);
     } else if(position == right_edge) {
-        move_right(FR_MOTOR, FL_MOTOR, reg_speed);
-        move_forward(BR_MOTOR, BL_MOTOR, sharp_turn_speed);
+        // move_right(FR_MOTOR, FL_MOTOR, reg_speed);
+        // move_forward(BR_MOTOR, BL_MOTOR, sharp_turn_speed);
         turn_on(arrows.af);
         turn_off(arrows.ab);
         turn_on(arrows.ar);
         turn_off(arrows.al);
     } else if(position == left_edge) {
-        move_left(FR_MOTOR, FL_MOTOR, reg_speed);
-        move_forward(BR_MOTOR, BL_MOTOR, sharp_turn_speed);
+        // move_left(FR_MOTOR, FL_MOTOR, reg_speed);
+        // move_forward(BR_MOTOR, BL_MOTOR, sharp_turn_speed);
         turn_on(arrows.af);
         turn_off(arrows.ab);
         turn_off(arrows.ar);
@@ -158,7 +158,8 @@ int main(void) {
 
         if (!is_obstacle()) {
             keep_on_track();
-            delay(1000);
+
+            //delay(1000);
         } else {
             printf("detected obstacle\n");
             stop_motors(FR_MOTOR, FL_MOTOR);
