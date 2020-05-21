@@ -153,10 +153,10 @@ int main(void) {
 
     create_sensor_threads();
 
-    while(1) {
+    while(!keyboard_interrupt) {
 
         if (!is_obstacle()) {
-            move_left(FR_MOTOR, FL_MOTOR, reg_speed);
+            move_left(FR_MOTOR, FL_MOTOR, gentle_turn_speed);
             move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
             turn_on(arrows.af);
             turn_off(arrows.ab);
