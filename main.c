@@ -88,7 +88,6 @@ int get_position() {
     int position = global_pos;
     piUnlock(POSITION_KEY);
 
-    printf("position: %d\n", position);
     return position;
 }
 
@@ -157,14 +156,21 @@ int main(void) {
     while(1) {
 
         if (!is_obstacle()) {
-            keep_on_track();
+            move_left(FR_MOTOR, FL_MOTOR, reg_speed);
+            move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
+            turn_on(arrows.af);
+            turn_off(arrows.ab);
+            turn_off(arrows.ar);
+            turn_on(arrows.al);
+
+            // keep_on_track();
 
             //delay(1000);
         } else {
-            printf("detected obstacle\n");
-            stop_motors(FR_MOTOR, FL_MOTOR);
-            stop_motors(BR_MOTOR, BL_MOTOR);
-            delay(1000);
+            // printf("detected obstacle\n");
+            // stop_motors(FR_MOTOR, FL_MOTOR);
+            // stop_motors(BR_MOTOR, BL_MOTOR);
+            // delay(1000);
         //     stop(motors, num_motors, arrows); delay(1000);
         //     backward(motors, num_motors, arrows); delay(1000);
         //     stop(motors, num_motors, arrows); delay(1000);
