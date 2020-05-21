@@ -162,13 +162,13 @@ int main(void) {
 
         } else {
             printf("detected obstacle\n");
-            stop_motors(FR_MOTOR, FL_MOTOR);
-            stop_motors(BR_MOTOR, BL_MOTOR);
-            turn_off(arrows.af);
-            turn_off(arrows.ab);
-            turn_off(arrows.ar);
-            turn_off(arrows.al);
-            delay(2000);
+            // stop_motors(FR_MOTOR, FL_MOTOR);
+            // stop_motors(BR_MOTOR, BL_MOTOR);
+            // turn_off(arrows.af);
+            // turn_off(arrows.ab);
+            // turn_off(arrows.ar);
+            // turn_off(arrows.al);
+            // delay(2000);
         //     stop(motors, num_motors, arrows); delay(1000);
         //     backward(motors, num_motors, arrows); delay(1000);
         //     stop(motors, num_motors, arrows); delay(1000);
