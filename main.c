@@ -196,11 +196,11 @@ int main(void) {
         delay(2000);
 
         while (is_obstacle()) {
-            linked_right(gentle_turn_speed, gentle_turn_speed);
+            linked_right(gentle_fturn_speed, gentle_bturn_speed);
         }
         
         while (get_position() == out_of_line) {
-            linked_left(gentle_turn_speed, gentle_turn_speed);
+            linked_left(gentle_fturn_speed, gentle_bturn_speed);
         }
             
         
