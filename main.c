@@ -16,7 +16,7 @@
 #define POSITION_KEY 1
 
 int reg_speed = 20;
-int gentle_turn_speed = 25;
+int gentle_turn_speed = 28;
 int sharp_turn_speed = 35;
 
 static volatile int global_pos = 0;
