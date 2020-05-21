@@ -127,6 +127,15 @@ void linked_left(int f_speed, int b_speed) {
     turn_on(arrows.al);
 }
 
+void linked_stop() {
+    stop_motors(FR_MOTOR, FL_MOTOR);
+    stop_motors(BR_MOTOR, BL_MOTOR);
+    turn_off(arrows.af);
+    turn_off(arrows.ab);
+    turn_off(arrows.ar);
+    turn_off(arrows.al);
+}
+
 void keep_on_track() {
     int position = get_position();
     
@@ -167,16 +176,14 @@ int main(void) {
     while(!keyboard_interrupt) {
         while (!is_obstacle()) {
             keep_on_track();
+            delay(500);
+            linked_stop(500);
+            delay(500);
 
         } 
 
         printf("detected obstacle\n");
-        stop_motors(FR_MOTOR, FL_MOTOR);
-        stop_motors(BR_MOTOR, BL_MOTOR);
-        turn_off(arrows.af);
-        turn_off(arrows.ab);
-        turn_off(arrows.ar);
-        turn_off(arrows.al);
+        linked_stop();
         delay(2000);
 
         while (is_obstacle()) {
