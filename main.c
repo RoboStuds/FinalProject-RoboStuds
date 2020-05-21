@@ -15,11 +15,11 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int reg_speed = 23;
-int rev_speed = 18;
-int gentle_fturn_speed = 28;
-int gentle_bturn_speed = 32;
-int sharp_turn_speed = 45;
+int reg_speed = 20;
+int rev_speed = 15;
+int gentle_fturn_speed = 25;
+int gentle_bturn_speed = 30;
+int sharp_turn_speed = 40;
 
 static volatile int global_pos = 0;
 static volatile double global_dist = 0;
@@ -161,7 +161,6 @@ void keep_on_track() {
         linked_left(gentle_fturn_speed, gentle_bturn_speed);
         printf("Can't detect the line!\n");
     }
-    int prev_position = position;
 }
 
 
