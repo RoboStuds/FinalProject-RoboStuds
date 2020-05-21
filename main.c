@@ -156,9 +156,9 @@ int main(void) {
     create_sensor_threads();
 
     while(!keyboard_interrupt) {
-
+        keep_on_track();
         if (!is_obstacle()) {
-            keep_on_track();
+            // keep_on_track();
 
         } else {
             printf("detected obstacle\n");
