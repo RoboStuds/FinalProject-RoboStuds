@@ -122,15 +122,15 @@ void keep_on_track() {
     int position = get_position();
     
     if(position == on_line) {
-        linked_forward(reg_speed);
+        // linked_forward(reg_speed);
     } else if(position == shifted_right) {
-        linked_left(gentle_turn_speed, gentle_turn_speed);
+        // linked_left(gentle_turn_speed, gentle_turn_speed);
     } else if(position == shifted_left) {
-        linked_right(gentle_turn_speed, gentle_turn_speed);
+        // linked_right(gentle_turn_speed, gentle_turn_speed);
     } else if(position == right_edge) {
-        linked_right(reg_speed, sharp_turn_speed);
+        // linked_right(reg_speed, sharp_turn_speed);
     } else if(position == left_edge) {
-        linked_left(reg_speed, sharp_turn_speed);
+        // linked_left(reg_speed, sharp_turn_speed);
     } else {
         printf("Can't detect the line!\n");
     }
@@ -160,7 +160,7 @@ int main(void) {
         if (!is_obstacle()) {
             keep_on_track();
 
-            delay(1000);
+            //delay(1000);
         } else {
             printf("detected obstacle\n");
             stop_motors(FR_MOTOR, FL_MOTOR);
