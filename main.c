@@ -147,7 +147,7 @@ int main(void) {
     // setup the motor and sensors
     setup_motors(FR_MOTOR, FL_MOTOR);
     setup_motors(BR_MOTOR, BL_MOTOR);
-    setup_arrows()
+    setup_arrows();
     setup_ultra_sensor();
     setup_line_sensor();
 

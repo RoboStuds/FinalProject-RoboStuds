@@ -31,13 +31,13 @@ void turn_on(int arrow) {
     digitalWrite(arrow, HIGH);
 
     if(keyboard_interrupt)
-        cleanup_arrows(arrows)
+        cleanup_arrows(arrows);
 }
 
 void turn_off(int arrow) {
     digitalWrite(arrow, LOW);
 
     if(keyboard_interrupt)
-        cleanup_arrows(arrows)
+        cleanup_arrows(arrows);
 }
 
