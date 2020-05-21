@@ -16,7 +16,7 @@
 #define POSITION_KEY 1
 
 int reg_speed = 20;
-int gentle_turn_speed = 28;
+int gentle_turn_speed = 30;
 int sharp_turn_speed = 35;
 
 static volatile int global_pos = 0;
@@ -156,7 +156,7 @@ int main(void) {
     while(!keyboard_interrupt) {
 
         if (!is_obstacle()) {
-            move_left(FR_MOTOR, FL_MOTOR, gentle_turn_speed);
+            move_left(FR_MOTOR, FL_MOTOR, 28);
             move_forward(BR_MOTOR, BL_MOTOR, gentle_turn_speed);
             turn_on(arrows.af);
             turn_off(arrows.ab);
