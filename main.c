@@ -147,8 +147,10 @@ void keep_on_track() {
         linked_right(gentle_turn_speed, gentle_turn_speed);
     } else if(position == right_edge) {
         linked_right(reg_speed, sharp_turn_speed);
+        delay(1000);
     } else if(position == left_edge) {
         linked_left(reg_speed, sharp_turn_speed);
+        delay(1000);
     } else {
         linked_backward(reg_speed);
         printf("Can't detect the line!\n");
