@@ -19,7 +19,7 @@ int reg_speed = 20;
 int rev_speed = 20;
 int gentle_fturn_speed = 28;
 int gentle_bturn_speed = 35;
-int sharp_turn_speed = 45;
+int sharp_turn_speed = 40;
 
 static volatile int global_pos = 0;
 static volatile double global_dist = 0;
