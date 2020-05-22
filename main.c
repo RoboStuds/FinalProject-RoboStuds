@@ -15,7 +15,7 @@
 #define DISTANCE_KEY 0
 #define POSITION_KEY 1
 
-int reg_speed = 25;
+int reg_speed = 20;
 int rev_speed = 20;
 int gentle_fturn_speed = 28;
 int gentle_bturn_speed = 35;
