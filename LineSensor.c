@@ -15,12 +15,18 @@ int out_of_line = 0, on_line = 1;
 int shifted_right = 2, shifted_left = 3;
 int right_edge = 4, left_edge = 5;
 
+
+// sets the pins for the line sensor
 void setup_line_sensor() {
     pinMode(IR_R, INPUT);
     pinMode(IR_C, INPUT);
     pinMode(IR_L, INPUT);
 }
 
+
+// returns the position of the car in relation to the line
+// (on the line, out the line, shifted right, shifted left
+// right edge or left edge)
 int detect_line(int color) {
     int right_read = digitalRead(IR_R);
     int center_read = digitalRead(IR_C);
