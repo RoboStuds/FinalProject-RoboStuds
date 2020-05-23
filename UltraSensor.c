@@ -5,11 +5,13 @@
 
 int echo = 22, trig = 21;
 
+// sets the ultrasonic sensor pins
 void setup_ultra_sensor() {
 	pinMode(trig, OUTPUT);
 	pinMode(echo, INPUT);
 }
 
+// returns the distance 
 double measure_distance() {
 	double startTime = 0;
 	double endTime = 0;
