@@ -7,6 +7,7 @@
 // wiringPi 25 = P37, wiringPi 23 = P33, wiringPi 27 = P36, wiringPi 24 = P35
 Arrow arrows = {.af = 25, .ab = 23, .ar = 27, .al = 24};
 
+// sets the arrow pins of the motor shield
 void setup_arrows() {
     pinMode(arrows.af, OUTPUT);
     pinMode(arrows.ab, OUTPUT);
@@ -14,6 +15,7 @@ void setup_arrows() {
     pinMode(arrows.al, OUTPUT);
 }
 
+// cleans the arrow pins (sets to low and input)
 void cleanup_arrows() {
     digitalWrite(arrows.af, LOW); 
     digitalWrite(arrows.ab, LOW); 
@@ -26,10 +28,12 @@ void cleanup_arrows() {
     pinMode(arrows.al, INPUT);
 }
 
+// turns on the arrow
 void turn_on(int arrow) {
     digitalWrite(arrow, HIGH);
 }
-
+ 
+// turns off the arrow
 void turn_off(int arrow) {
     digitalWrite(arrow, LOW);
 }
