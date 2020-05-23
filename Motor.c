@@ -15,7 +15,7 @@ Motor m3 = {.num = 3, .e = 12, .f = 13, .r = 14};
 // wiringPi 26 = P32, wiringPi 10 = P24, wiringPi 11 = P26 
 Motor m4 = {.num = 4, .e = 26, .f = 11, .r = 10};
 
-
+// cleans the motor pins (sets them to low and input)
 void cleanup_motor(Motor motor) {
     softPwmWrite(motor.e, 0);
     digitalWrite(motor.e, LOW);
@@ -27,6 +27,7 @@ void cleanup_motor(Motor motor) {
     pinMode(motor.r, INPUT);
 }
 
+// sets the motor pins
 void setup_motors(Motor right_motor, Motor left_motor) {
     pinMode(right_motor.e, OUTPUT);
     pinMode(right_motor.f, OUTPUT);
@@ -47,11 +48,13 @@ void setup_motors(Motor right_motor, Motor left_motor) {
     digitalWrite(left_motor.r, LOW);
 }
 
+// stops the right and left motor (sets the enable pins to 0)
 void stop_motors(Motor right_motor, Motor left_motor) {
     softPwmWrite(right_motor.e, 0);
     softPwmWrite(left_motor.e, 0);
 }
 
+// moves the right and left motor forward with the given speed
 void move_forward(Motor right_motor, Motor left_motor, int speed) {
     softPwmWrite(right_motor.e, speed);
     digitalWrite(right_motor.f, HIGH);
@@ -70,6 +73,7 @@ void move_forward(Motor right_motor, Motor left_motor, int speed) {
 
 }
 
+// moves the right and left motor backward with the given speed
 void move_backward(Motor right_motor, Motor left_motor, int speed) {
     softPwmWrite(right_motor.e, speed);
     digitalWrite(right_motor.f, LOW);
@@ -87,6 +91,7 @@ void move_backward(Motor right_motor, Motor left_motor, int speed) {
     }
 }
 
+// moves the robot to the right direction (right-reverse, left-forward)
 void move_right(Motor right_motor, Motor left_motor, int speed) {
     softPwmWrite(right_motor.e, speed);
     digitalWrite(right_motor.f, LOW);
@@ -104,6 +109,7 @@ void move_right(Motor right_motor, Motor left_motor, int speed) {
     }
 }
 
+// moves the robot to the left direction (right-forward, left-reverse)
 void move_left(Motor right_motor, Motor left_motor, int speed) {
     softPwmWrite(right_motor.e, speed);
     digitalWrite(right_motor.f, HIGH);
@@ -121,7 +127,7 @@ void move_left(Motor right_motor, Motor left_motor, int speed) {
     }
 }
 
-// sets the enable pin of the motors with the given duty_cycle 
+// sets the enable pin of the motors with the given speed 
 void set_speed(Motor motor, int speed) {
     printf("Speed of Motor%d:  %d%%\n", motor.num, speed);
     softPwmWrite(motor.e, speed);
