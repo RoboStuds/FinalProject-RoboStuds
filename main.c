@@ -47,6 +47,8 @@ PI_THREAD(set_distance) {
     return 0;
 }
 
+
+// creates the threads for the sensors
 void create_sensor_threads() {
     int ultra_sensor_thread = piThreadCreate(set_distance);
     if(ultra_sensor_thread != 0) {
@@ -73,6 +75,8 @@ double get_distance() {
     return distance;
 }
 
+
+// returns true when the obstacle is within the 2-50cm range
 int is_obstacle() {
     double distance = get_distance();
 
@@ -159,8 +163,6 @@ void keep_on_track() {
         linked_left(reg_speed, sharp_turn_speed); delay(1000);
     } else {
         linked_backward(reg_speed);
-        // linked_right(gentle_fturn_speed, gentle_bturn_speed);
-        // linked_left(gentle_fturn_speed, gentle_bturn_speed);
         printf("Can't detect the line!\n");
     }
 }
@@ -184,9 +186,9 @@ int main(void) {
 
     create_sensor_threads();
 
+    // allows the robot to follow the track and go around an obstacle
     while(!keyboard_interrupt) {
         while (!is_obstacle()) {
-            linked_forward(reg_speed);
             keep_on_track();
             delay(300);
             linked_stop();
